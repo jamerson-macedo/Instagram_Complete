@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Instagram</string>
+    <string name="login_hint_email">Número de telefone, email ou nome de usuário</string>
+    <string name="login_hint_password">Senha</string>
+    <string name="Enter">Entrar</string>
+    <string name="ou">OU</string>
+    <string name="aviso">Esqueceu seus dados de login? obtenha ajuda para entrar</string>
+
+    <string name="facebook_app_id">297217380953057</string>
+    <string name="fb_login_protocol_scheme">fb297217380953057</string>
+    <string name="facebook_client_token">56789</string>
+    <string name="cadastre_se">Não tem uma conta ? Cadastre-se</string>
+</resources>
