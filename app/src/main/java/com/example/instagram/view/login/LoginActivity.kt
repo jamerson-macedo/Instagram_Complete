@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
                 .error = "Email invalido !"
             findViewById<TextInputLayout>(R.id.login_edit_password_input)
                 .error = "senha Invalida !"
+            // simulando um tempo pos clique
             Handler(Looper.getMainLooper()).postDelayed({
                 buttonLogin.showProgress(false)
             }, 2000)
