@@ -14,4 +14,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="proxima">Proximo</string>
     <string name="alreadyaccount">Já tem uma conta ? Faça o Login</string>
+    <string name="nome">nome</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="agree_terms_policy">Ao clicar em avançar, voce pode concordar com nossos termos, politica de dados e politica de cookies</string>
+    <string name="welcome_instagram"><b>Bem vindo ao instagram,\n%1$s</b>\n Encontre pessoas para seguir e comece a compartilhar fotos. voce pode alterar seu nome de usuario a qualquer momento></string>
+    <string name="title_photo_profile">Adicione foto do perfil</string>
+    <string name="subtitle_photo_profile">Adicione uma foto para que seus amigos saibam que é voce </string>
+    <string name="add_photo">Adicionar foto</string>
+    <string name="jump">Pular</string>
+    <string name="define_photo">Definir uma foto para o perfil</string>
+    <string name="photo">Foto</string>
+    <string name="galery">Galeria</string>
 </resources>

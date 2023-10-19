@@ -29,6 +29,13 @@
         <item name="android:textColor">@color/gray_text</item>
 
     </style>
+    
+    <style name="Theme.Instagram.TextBase.form">
+
+        <item name="android:textAlignment">center</item>
+        <item name="android:titleMarginBottom">24dp</item>
+    </style>
+    
     <style name="Theme.Instagram.FormEditTextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -37,6 +44,12 @@
         <item name="android:layout_marginBottom">20dp</item>
 
 
+    </style>
+
+    <style name="Theme.Instagram.link" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blue_enabled</item>
     </style>
 
 </resources>
