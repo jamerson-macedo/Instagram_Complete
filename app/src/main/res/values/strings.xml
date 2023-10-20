@@ -25,4 +25,12 @@
     <string name="define_photo">Definir uma foto para o perfil</string>
     <string name="photo">Foto</string>
     <string name="galery">Galeria</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Buscar</string>
+    <string name="add_publish">publicar\n</string>
+    <string name="reels">reels</string>
+    <string name="profile">profile\n</string>
+    <string name="menu_publish">publicar</string>
+    <string name="menu_reels">Reels</string>
+    <string name="menu_profile">Perfil</string>
 </resources>

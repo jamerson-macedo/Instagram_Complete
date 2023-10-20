@@ -15,13 +15,19 @@
         android:theme="@style/Theme.Instagram"
         tools:targetApi="31">
         <activity
-            android:name=".register.view.RegisterActivity"
-            android:exported="true" >
+            android:name=".home.view.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".register.view.RegisterActivity"
+            android:exported="true">
+
         </activity>
 
         <meta-data
@@ -33,9 +39,7 @@
 
         <activity
             android:name=".view.login.LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
