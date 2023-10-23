@@ -11,45 +11,6 @@
     android:layout_height="match_parent"
     tools:context=".home.view.ProfileFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/profile_name_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|left"
-            android:adjustViewBounds="true"
-            android:src="@drawable/insta_logo"
-            android:text="jamerson_macedo"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/toolbar_messager"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center_horizontal|end"
-            android:layout_marginEnd="15dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/baseline_menu_24" />
-
-        <ImageView
-            android:id="@+id/toolbar_notification"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center_horizontal|end"
-            android:layout_marginEnd="15dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/post_icon" />
-    </androidx.appcompat.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_img_icon"
@@ -62,7 +23,7 @@
         app:civ_border_width="1dp"
         app:civ_circle_background_color="@color/gray_border"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profile_txt_post_count"
@@ -149,23 +110,25 @@
         app:layout_constraintTop_toBottomOf="@id/profile_txt_username"
         android:text="É em meio a dificuldade que se encontra a oportunidade"
         tools:text="É em meio a dificuldade que se encontra a oportunidade" />
+
     <LinearLayout
+        android:id="@+id/linear_favorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linear_favorites"
 
 
+        app:layout_constraintBottom_toTopOf="@+id/profile_rv"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_txt_bio">
 
-        app:layout_constraintTop_toBottomOf="@+id/profile_txt_bio"
-        >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_profile_favorites"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            tools:listitem="@layout/item_profile_favorite"
-           />
+            tools:listitem="@layout/item_profile_favorite" />
 
     </LinearLayout>
 
