@@ -33,4 +33,10 @@
     <string name="menu_publish">publicar</string>
     <string name="menu_reels">Reels</string>
     <string name="menu_profile">Perfil</string>
+    <string name="publica_es">Publicações</string>
+    <string name="followers">Seguidores</string>
+    <string name="following">seguindo</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="username">Username</string>
+    <string name="bio">ola mundo</string>
 </resources>
