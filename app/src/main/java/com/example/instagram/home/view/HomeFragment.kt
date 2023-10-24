@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +37,69 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val rv_feed = view.findViewById<RecyclerView>(R.id.home_rv_feed)
+        rv_feed.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_feed.adapter = FeedAdapter()
+
+        // recycler destaques
+        //val rv_profile_fav = view.findViewById<RecyclerView>(R.id.home_rv_stories)
+       // rv_profile_fav.layoutManager =
+        //    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+       // rv_profile_fav.adapter = StoriesAdapter()
     }
+
+    private class StoriesAdapter() : RecyclerView.Adapter<StoriesAdapter.StoriesViewHolder>() {
+
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoriesViewHolder {
+            return StoriesViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_home_stories, parent, false)
+            )
+        }
+
+        override fun getItemCount(): Int {
+            return 30
+        }
+
+        override fun onBindViewHolder(holder: StoriesViewHolder, position: Int) {
+            holder.bind(R.drawable.profile)
+        }
+
+        class StoriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bind(imageView: Int) {
+                itemView.findViewById<ImageView>(R.id.item_home_stories)
+                    .setImageResource(imageView)
+            }
+        }
+    }
+
+    private class FeedAdapter() : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
+
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
+            return FeedViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_home_feed, parent, false)
+            )
+        }
+
+        override fun getItemCount(): Int {
+            return 30
+        }
+
+        override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
+            holder.bind(R.drawable.profile)
+        }
+
+        class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bind(imageView: Int) {
+                itemView.findViewById<ImageView>(R.id.home_icon_user)
+                    .setImageResource(imageView)
+            }
+        }
+    }
+
 
 }

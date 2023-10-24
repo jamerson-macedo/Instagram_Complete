@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="1dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/home_icon_user"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/home_txt_name"
+        style="@style/Theme.Instagram.TextBase"
+        android:layout_marginStart="10dp"
+        android:text="jamerson_macedo"
+        app:layout_constraintBottom_toBottomOf="@id/home_icon_user"
+        app:layout_constraintStart_toEndOf="@id/home_icon_user"
+        app:layout_constraintTop_toTopOf="@id/home_icon_user" />
+
+    <TextView
+        android:id="@+id/home_txt_location"
+        style="@style/Theme.Instagram.TextBase"
+        android:layout_marginStart="10dp"
+        android:text="EUA"
+        app:layout_constraintStart_toEndOf="@id/home_icon_user"
+        app:layout_constraintTop_toBottomOf="@id/home_txt_name" />
+
+    <ImageView
+        android:id="@+id/home_icon_menu"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/dotz"
+        app:layout_constraintBottom_toBottomOf="@id/home_icon_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/home_icon_user" />
+
+    <ImageView
+        android:id="@+id/home_img_post"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_icon_user"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:id="@+id/home_conteiner_icons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_img_post">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_heart" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_comment" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_send" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginStart="200dp"
+            android:src="@drawable/ic_bookmark" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_txt_caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="rejnbgjerkngerjgnkjenrg"
+        android:maxLines="3"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_conteiner_icons" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
