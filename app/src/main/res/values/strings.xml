@@ -39,4 +39,6 @@
     <string name="edit_profile">Editar perfil</string>
     <string name="username">Username</string>
     <string name="bio">ola mundo</string>
+    <string name="invalidEmail">Email invalido!</string>
+    <string name="invalidpassowrd">senha deve ter ao menos 8 caracteres</string>
 </resources>

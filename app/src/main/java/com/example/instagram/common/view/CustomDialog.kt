@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.instagram.R
+import com.example.instagram.databinding.DialogCustomBinding
+import com.example.instagram.databinding.FragmentRegisterPhotoBinding
 
 class CustomDialog(context: Context) : Dialog(context) {
     // adicionar programaticamente cada texto novo do nosso dialog
@@ -14,12 +16,13 @@ class CustomDialog(context: Context) : Dialog(context) {
     private lateinit var textButtons: Array<TextView>
     private var titleId:Int?=null
     private lateinit var txtdialog:TextView
+    private lateinit var binding: DialogCustomBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_custom)
-        linearLayout = findViewById(R.id.linear_container)
-        txtdialog = findViewById(R.id.dialog_title)
+        binding=DialogCustomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
     }
 
     override fun setTitle(titleId: Int) {
@@ -46,7 +49,7 @@ class CustomDialog(context: Context) : Dialog(context) {
     override fun show() {
         super.show()
         titleId?.let {
-            txtdialog.setText(it)
+            binding.dialogTitle.setText(it)
         }
         for (txtview in textButtons) {
             val layoutParams = LinearLayout.LayoutParams(
@@ -54,7 +57,7 @@ class CustomDialog(context: Context) : Dialog(context) {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             layoutParams.setMargins(30, 50, 30, 50)
-            linearLayout.addView(txtview, layoutParams)
+            binding.linearContainer.addView(txtview, layoutParams)
         }
     }
 

@@ -17,16 +17,13 @@
         <activity
             android:name=".home.view.HomeActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
             android:name=".register.view.RegisterActivity"
             android:exported="true">
+
 
         </activity>
 
@@ -38,8 +35,14 @@
             android:value="@string/facebook_client_token" />
 
         <activity
-            android:name=".view.login.LoginActivity"
-            android:exported="true"></activity>
+            android:name=".login.view.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
