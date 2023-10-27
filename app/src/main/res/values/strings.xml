@@ -9,11 +9,11 @@
     <string name="facebook_app_id">297217380953057</string>
     <string name="fb_login_protocol_scheme">fb297217380953057</string>
     <string name="facebook_client_token">56789</string>
-    <string name="cadastre_se">Não tem uma conta ? Cadastre-se</string>
+    <string name="cadastre_se">Não tem uma conta ? <b> Cadastre-se</b></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="proxima">Proximo</string>
-    <string name="alreadyaccount">Já tem uma conta ? Faça o Login</string>
+    <string name="alreadyaccount">Já tem uma conta ? <b>Faça o Login</b> </string>
     <string name="nome">nome</string>
     <string name="confirm_password">Confirmar senha</string>
     <string name="agree_terms_policy">Ao clicar em avançar, voce pode concordar com nossos termos, politica de dados e politica de cookies</string>

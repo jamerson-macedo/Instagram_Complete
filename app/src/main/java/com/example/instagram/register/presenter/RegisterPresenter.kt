@@ -1,4 +1,4 @@
-package com.example.instagram.login.presenter
+package com.example.instagram.register.presenter
 
 import android.util.Patterns
 import com.example.instagram.R
@@ -6,12 +6,15 @@ import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.login.Login
 import com.example.instagram.login.data.LoginCallback
 import com.example.instagram.login.data.LoginRepository
+import com.example.instagram.register.RegisterEmail
+import com.example.instagram.register.data.RegisterEmailCallback
+import com.example.instagram.register.data.RegisterEmailRepository
 
-class LoginPresenter(private var view: Login.View?, private val dataRepository: LoginRepository) :
-    Login.Presenter {
-    override fun login(email: String, password: String) {
+
+class RegisterPresenter(private var view: RegisterEmail.View?, private val dataRepository: RegisterEmailRepository) :
+    RegisterEmail.Presenter {
+    override fun create(email: String) {
         val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val isPasswordValid = password.length >= 8
 
         if (!isEmailValid) {
             view?.emailDisplayFailure(R.string.invalidEmail)
@@ -19,24 +22,19 @@ class LoginPresenter(private var view: Login.View?, private val dataRepository: 
         } else {
             view?.emailDisplayFailure(null)
         }
-        if (!isPasswordValid) {
-            view?.passWordDisplayFailure(R.string.invalidpassowrd)
-        } else {
-            view?.passWordDisplayFailure(null)
 
-        }
-        if (isPasswordValid && isEmailValid) {
+        if (isEmailValid ) {
             // se der tudo certo entao
             // mostrar a progresss
             view?.showProgress(true)
-            dataRepository.login(email, password, object : LoginCallback {
-                override fun onSuccess(userAuth: UserAuth) {
+            dataRepository.create(email, object : RegisterEmailCallback {
+                override fun onSuccess() {
                     // agora retorna a view a resposta
-                    view?.onUserAuthenticated()
+                    view?.goToNameAndPassword(email)
                 }
 
                 override fun onFailure(messager: String) {
-                    view?.onUserUnauthorized(messager)
+                    view?.onEmailFailure(messager)
                 }
 
                 override fun onComplete() {
