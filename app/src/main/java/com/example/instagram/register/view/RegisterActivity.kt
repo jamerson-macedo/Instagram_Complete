@@ -1,22 +1,51 @@
 package com.example.instagram.register.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityRegisterBinding
+import com.example.instagram.register.view.RegisterNamePasswordFragment.Companion.KEY_EMAIL
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), FragmentAtachListener {
     private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // para gerar um container de fragments é preciso colocar um frame layout e depois inflar cada um
-        val fragment=RegisterEmailFragment()
-        supportFragmentManager.beginTransaction().apply {
-            // o container e dps o fragment desejado
-            add(R.id.register_fragment,fragment)
-            commit()
+        val fragment = RegisterEmailFragment()
+        replaceFragment(fragment)
+
+    }
+
+    override fun goToNameAndPassword(email: String) {
+        var args = Bundle()
+        args.putString(KEY_EMAIL, email)
+        val registerEmailFragment = RegisterNamePasswordFragment()
+        registerEmailFragment.arguments = args
+        replaceFragment(registerEmailFragment)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        // verifica se jan foi iniciado
+        if (supportFragmentManager.findFragmentById(R.id.register_fragment) == null) {
+            supportFragmentManager.beginTransaction().apply {
+                // o container e dps o fragment desejado
+                // para empilhar os fragments addbackstack
+                add(R.id.register_fragment, fragment)
+                commit()
+            }
+        } else {
+            supportFragmentManager.beginTransaction().apply {
+                // o container e dps o fragment desejado
+                // para empilhar os fragments addbackstack
+                replace(R.id.register_fragment, fragment)
+                addToBackStack(null)
+                commit()
+            }
+
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.instagram.register.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.instagram.register.presenter.RegisterPresenter
 class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), RegisterEmail.View {
     private var binding: FragmentRegisterEmailBinding? = null
     override lateinit var presenter: RegisterEmail.Presenter
+    private var fragmentAtachListener:FragmentAtachListener?=null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,10 +36,20 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
                 }
                 registerEditEmail.addTextChangedListener(watcher)
                 registerEditEmail.addTextChangedListener(TxtWatcher {
+                    // limpa os campos de erro
                     emailDisplayFailure(null)
                 })
 
             }
+        }
+    }
+    // monitorar nosso fragment
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is FragmentAtachListener){
+            // GUAREDA A REFERENCIA DA ACTIVITY
+            fragmentAtachListener=context
+
         }
     }
 
@@ -45,6 +57,7 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
     override fun onDestroy() {
         binding = null
         presenter.onDestroy()
+        fragmentAtachListener=null
         super.onDestroy()
     }
 
@@ -52,12 +65,13 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
         binding?.registerBtnNext?.isEnabled = binding?.registerEditEmail?.text.toString()
             .isNotEmpty()
     }
+
     override fun emailDisplayFailure(emailError: Int?) {
-        binding?.registerEditEmail?.error=emailError?.let { getString(it) }
+        binding?.registerEditEmail?.error = emailError?.let { getString(it) }
     }
 
     override fun onEmailFailure(message: String) {
-        binding?.registerEditEmail?.error=message
+        binding?.registerEditEmail?.error = message
     }
 
     override fun showProgress(enabled: Boolean) {
@@ -65,7 +79,7 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
     }
 
     override fun goToNameAndPassword(email: String) {
-
+        fragmentAtachListener?.goToNameAndPassword(email)
     }
 
 
