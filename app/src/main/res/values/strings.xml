@@ -41,4 +41,6 @@
     <string name="bio">ola mundo</string>
     <string name="invalidEmail">Email invalido!</string>
     <string name="invalidpassowrd">senha deve ter ao menos 8 caracteres</string>
+    <string name="name_invalid">Nome invalido</string>
+    <string name="password_diferent">as Senhas sao diferentes</string>
 </resources>
