@@ -24,8 +24,9 @@
             android:paddingBottom="70dp"
             tools:context=".view.login.LoginActivity">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
+                android:id="@+id/register_img_profile"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="48dp"
@@ -46,7 +47,7 @@
                 android:text="@string/subtitle_photo_profile" />
 
 
-            <com.example.instagram.login.view.LoadingButton
+            <com.example.instagram.common.view.base.LoadingButton
                 android:id="@+id/register_btn_addphoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

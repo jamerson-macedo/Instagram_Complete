@@ -55,4 +55,8 @@ dependencies {
     implementation ("com.facebook.android:facebook-login:latest.release")
     // circle image view
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    //image crop
+    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+    // para se comunicar entre fragments
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
 }

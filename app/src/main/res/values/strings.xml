@@ -43,4 +43,6 @@
     <string name="invalidpassowrd">senha deve ter ao menos 8 caracteres</string>
     <string name="name_invalid">Nome invalido</string>
     <string name="password_diferent">as Senhas sao diferentes</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

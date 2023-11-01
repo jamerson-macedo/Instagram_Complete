@@ -29,7 +29,7 @@
                 android:id="@+id/txt_welcome"
                 android:text="@string/welcome_instagram" />
 
-            <com.example.instagram.login.view.LoadingButton
+            <com.example.instagram.common.view.base.LoadingButton
                 android:id="@+id/register_btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
