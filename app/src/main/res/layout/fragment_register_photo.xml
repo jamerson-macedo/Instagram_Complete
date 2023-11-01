@@ -47,7 +47,7 @@
 
 
             <com.example.instagram.login.view.LoadingButton
-                android:id="@+id/register_btn_next"
+                android:id="@+id/register_btn_addphoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:text="@string/add_photo" />

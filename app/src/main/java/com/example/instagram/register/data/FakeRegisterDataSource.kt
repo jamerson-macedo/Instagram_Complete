@@ -30,11 +30,12 @@ class FakeRegisterDataSource : RegisterDataSource {
                 callback.onFailure("usuario ja cadastrado")
             } else {
                 // retorna um boolean
-                val created=DataBase.userAuths.add(
-                    UserAuth(UUID.randomUUID().toString(),name,email,password)
-                )
+                val newUser=UserAuth(UUID.randomUUID().toString(),name,email,password)
+                val created=DataBase.userAuths.add(newUser)
                 // se o usuario for criado entao
                 if(created){
+                    // gravando no banco o novo usuario
+                    DataBase.sessionAuth=newUser
                     callback.onSuccess()
                 }else{
                     callback.onFailure("Erro interno no servidor")
