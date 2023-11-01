@@ -26,6 +26,7 @@
 
             <TextView
                 style="@style/Theme.Instagram.TextBase.form"
+                android:id="@+id/txt_welcome"
                 android:text="@string/welcome_instagram" />
 
             <com.example.instagram.login.view.LoadingButton

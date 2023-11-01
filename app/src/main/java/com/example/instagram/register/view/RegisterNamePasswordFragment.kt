@@ -1,5 +1,6 @@
 package com.example.instagram.register.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,9 +17,11 @@ class RegisterNamePasswordFragment() : Fragment(R.layout.fragment_register_name_
     RegisterNameAndPassword.View {
     private var binding: FragmentRegisterNamePasswordBinding? = null
     override lateinit var presenter: RegisterNameAndPassword.Presenter
+    private var fragmentAtachListener:FragmentAtachListener?=null
 
     companion object {
         const val KEY_EMAIL = "key_email"
+
     }
 
 
@@ -87,7 +90,7 @@ class RegisterNamePasswordFragment() : Fragment(R.layout.fragment_register_name_
     }
 
     override fun onCreateSucces(name: String) {
-       //
+      fragmentAtachListener?.goToWelcomeScreen(name)
     }
 
     override fun onCreateFailure(message: String) {
@@ -96,5 +99,13 @@ class RegisterNamePasswordFragment() : Fragment(R.layout.fragment_register_name_
 
     override fun showProgress(enabled: Boolean) {
         binding?.registerNameBtnNext?.showProgress(enabled)
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is FragmentAtachListener){
+            // GUAREDA A REFERENCIA DA ACTIVITY
+            fragmentAtachListener=context
+
+        }
     }
 }

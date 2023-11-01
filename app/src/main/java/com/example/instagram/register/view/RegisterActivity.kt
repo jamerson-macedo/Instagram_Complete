@@ -7,6 +7,8 @@ import com.example.instagram.R
 import com.example.instagram.databinding.ActivityRegisterBinding
 import com.example.instagram.register.view.RegisterNamePasswordFragment.Companion.KEY_EMAIL
 
+import com.example.instagram.register.view.RegisterWelcomeFragment.Companion.KEY_NAME
+
 class RegisterActivity : AppCompatActivity(), FragmentAtachListener {
     private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,20 @@ class RegisterActivity : AppCompatActivity(), FragmentAtachListener {
         val registerEmailFragment = RegisterNamePasswordFragment()
         registerEmailFragment.arguments = args
         replaceFragment(registerEmailFragment)
+    }
+
+    override fun goToWelcomeScreen(nome: String) {
+        var args = Bundle()
+        args.putString(KEY_NAME,nome)
+        val welcomeFragment = RegisterWelcomeFragment()
+        welcomeFragment.arguments = args
+        replaceFragment(welcomeFragment)
+    }
+
+    override fun goToUploadPhotoScreen() {
+
+        val fragment = RegisterPhotoFragment()
+        replaceFragment(fragment)
     }
 
     private fun replaceFragment(fragment: Fragment) {
