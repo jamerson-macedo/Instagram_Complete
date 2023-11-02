@@ -7,17 +7,22 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.instagram.R
 import com.example.instagram.common.view.CropperImageFragment.Companion.KEY_URI
 import com.example.instagram.common.view.CustomDialog
+import com.example.instagram.common.view.base.DependencyInjector
 import com.example.instagram.databinding.FragmentRegisterPhotoBinding
+import com.example.instagram.register.RegisterPhoto
+import com.example.instagram.register.presenter.RegisterPhotoPresenter
 
 
-class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
+class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo),RegisterPhoto.View {
     private var binding: FragmentRegisterPhotoBinding? = null
     private var fragmentAtachListener: FragmentAtachListener? = null
+    override lateinit var presenter: RegisterPhoto.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +46,8 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
             }
             binding?.registerImgProfile?.setImageBitmap(bitmap)
+            // depois que setou a imagem ai salva no banco
+            presenter.updateUser(uri)
 
 
         }
@@ -50,6 +57,8 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegisterPhotoBinding.bind(view)
+        val repository=DependencyInjector.registerEmailRepository()
+        presenter= RegisterPhotoPresenter(this,repository)
 
         binding?.apply {
             registerBtnJump.setOnClickListener {
@@ -66,6 +75,7 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
     override fun onDestroy() {
         // sempre que usar o biding tem que liberar a memoria
         binding = null
+        presenter.onDestroy()
         super.onDestroy()
     }
 
@@ -74,7 +84,9 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
         customdialog.setTitle(R.string.app_name)
         customdialog.addButton(R.string.photo, R.string.galery) {
             when (it.id) {
-                R.string.photo -> {}
+                R.string.photo -> {
+                    fragmentAtachListener?.openCamera()
+                }
                 R.string.galery -> {
                     // para abrir a galeria tem que chamar quem administra o fragment
                     fragmentAtachListener?.goToGalery()
@@ -93,6 +105,20 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
             fragmentAtachListener = context
         }
     }
+
+    override fun onUpdateSucces() {
+        fragmentAtachListener?.goToMainScreen()
+    }
+
+    override fun onUpdateFailure(message: String) {
+       Toast.makeText(requireContext(),message,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        binding?.registerBtnAddphoto?.showProgress(enabled)
+    }
+
+
 
 
 }
