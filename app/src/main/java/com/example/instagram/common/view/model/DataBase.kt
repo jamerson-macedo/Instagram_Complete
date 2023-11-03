@@ -11,5 +11,7 @@ object DataBase {
     init {
         userAuths.add(UserAuth(UUID.randomUUID().toString(),"jamerson","jamersonestilizado@gmail.com","12345678"))
         userAuths.add(UserAuth(UUID.randomUUID().toString(),"jamerson","estilizado@gmail.com","12345678"))
+        // forcando inicio com usuario cadastrado
+
     }
 }

@@ -9,6 +9,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.IMAGE_CAPTURE" />
@@ -26,17 +27,20 @@
         android:theme="@style/Theme.Instagram"
         tools:targetApi="31">
         <activity
-            android:name=".home.view.HomeActivity"
-            android:exported="true">
+            android:name=".splash.view.SplashActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
+            android:name=".home.view.HomeActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".register.view.RegisterActivity"
-            android:exported="true">
-
-
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -48,12 +52,9 @@
         <activity
             android:name=".login.view.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.instagram.fileprovider"
