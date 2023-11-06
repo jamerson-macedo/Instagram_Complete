@@ -15,6 +15,7 @@ abstract class BaseFragment<T, P : BasePresenter>(layoutId: Int, val bind: (View
         getMenu()?.let {
             setHasOptionsMenu(true)
         }
+        setUpPresenter()
     }
     override fun onDestroy() {
         binding = null
