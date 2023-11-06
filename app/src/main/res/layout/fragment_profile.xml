@@ -1,146 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.view.ProfileFragment">
+    android:layout_height="match_parent">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_img_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
-        android:src="@drawable/profile"
-        app:civ_border_color="@color/gray"
-        app:civ_border_width="1dp"
-        app:civ_circle_background_color="@color/gray_border"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/profile_txt_post_count"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="0"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/profile_txt_followers_count"
-        app:layout_constraintStart_toEndOf="@id/profile_img_icon"
-        app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
-
-    <TextView
-        android:id="@+id/profile_txt_followers_count"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="0"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/profile_txt_following_count"
-        app:layout_constraintStart_toEndOf="@id/profile_txt_post_count"
-        app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
-
-    <TextView
-        android:id="@+id/profile_txt_following_count"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="0"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/profile_txt_followers_count"
-        app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
-
-    <TextView
-        android:id="@+id/profile_txt_post"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="@string/publica_es"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/profile_txt_followers_count"
-        app:layout_constraintStart_toEndOf="@id/profile_img_icon"
-        app:layout_constraintTop_toBottomOf="@id/profile_txt_post_count" />
-
-    <TextView
-        android:id="@+id/profile_txt_followers"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="@string/followers"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/profile_txt_following_count"
-        app:layout_constraintStart_toEndOf="@id/profile_txt_post_count"
-        app:layout_constraintTop_toBottomOf="@id/profile_txt_followers_count" />
-
-    <TextView
-        android:id="@+id/profile_txt_following"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:text="@string/following"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/profile_txt_followers_count"
-        app:layout_constraintTop_toBottomOf="@id/profile_txt_following_count" />
-
-    <Button
-        android:id="@+id/profile_btn_edit_profile"
-        style="@style/Theme.Instagram.Button.background"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_profile"
-        app:layout_constraintEnd_toEndOf="@id/profile_txt_following"
-        app:layout_constraintStart_toEndOf="@id/profile_img_icon"
-        app:layout_constraintTop_toBottomOf="@id/profile_txt_post" />
-
-    <TextView
-        android:id="@+id/profile_txt_username"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:layout_marginTop="10dp"
-        android:text="@string/username"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/profile_img_icon"
-        app:layout_constraintTop_toBottomOf="@id/profile_img_icon" />
-
-    <TextView
-        android:id="@+id/profile_txt_bio"
-        style="@style/Theme.Instagram.TextViewProfile"
-        android:layout_marginTop="10dp"
-        android:ellipsize="marquee"
-        android:maxLines="3"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="@id/profile_btn_edit_profile"
-        app:layout_constraintStart_toStartOf="@id/profile_txt_username"
-        app:layout_constraintTop_toBottomOf="@id/profile_txt_username"
-        android:text="É em meio a dificuldade que se encontra a oportunidade"
-        tools:text="É em meio a dificuldade que se encontra a oportunidade" />
-
-    <LinearLayout
-        android:id="@+id/linear_favorites"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent">
 
-
-        app:layout_constraintBottom_toTopOf="@+id/profile_rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_txt_bio">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_profile_favorites"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            tools:listitem="@layout/item_profile_favorite" />
-
-    </LinearLayout>
+            android:layout_height="match_parent"
+            tools:context=".profile.view.ProfileFragment">
 
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_img_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/gray_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/profile_txt_post_count"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="0"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/profile_txt_followers_count"
+                app:layout_constraintStart_toEndOf="@id/profile_img_icon"
+                app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
+
+            <TextView
+                android:id="@+id/profile_txt_followers_count"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="0"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/profile_txt_following_count"
+                app:layout_constraintStart_toEndOf="@id/profile_txt_post_count"
+                app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
+
+            <TextView
+                android:id="@+id/profile_txt_following_count"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="0"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_txt_followers_count"
+                app:layout_constraintTop_toTopOf="@id/profile_img_icon" />
+
+            <TextView
+                android:id="@+id/profile_txt_post"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="@string/publica_es"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/profile_txt_followers_count"
+                app:layout_constraintStart_toEndOf="@id/profile_img_icon"
+                app:layout_constraintTop_toBottomOf="@id/profile_txt_post_count" />
+
+            <TextView
+                android:id="@+id/profile_txt_followers"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="@string/followers"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/profile_txt_following_count"
+                app:layout_constraintStart_toEndOf="@id/profile_txt_post_count"
+                app:layout_constraintTop_toBottomOf="@id/profile_txt_followers_count" />
+
+            <TextView
+                android:id="@+id/profile_txt_following"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:text="@string/following"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_txt_followers_count"
+                app:layout_constraintTop_toBottomOf="@id/profile_txt_following_count" />
+
+            <Button
+                android:id="@+id/profile_btn_edit_profile"
+                style="@style/Theme.Instagram.Button.background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile"
+                app:layout_constraintEnd_toEndOf="@id/profile_txt_following"
+                app:layout_constraintStart_toEndOf="@id/profile_img_icon"
+                app:layout_constraintTop_toBottomOf="@id/profile_txt_post" />
+
+            <TextView
+                android:id="@+id/profile_txt_username"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:layout_marginTop="10dp"
+                android:text="@string/username"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/profile_img_icon"
+                app:layout_constraintTop_toBottomOf="@id/profile_img_icon" />
+
+            <TextView
+                android:id="@+id/profile_txt_bio"
+                style="@style/Theme.Instagram.TextViewProfile"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:maxLines="3"
+                android:text="É em meio a dificuldade que se encontra a oportunidade"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="@id/profile_btn_edit_profile"
+                app:layout_constraintStart_toStartOf="@id/profile_txt_username"
+                app:layout_constraintTop_toBottomOf="@id/profile_txt_username"
+                tools:text="É em meio a dificuldade que se encontra a oportunidade" />
+
+            <LinearLayout
+                android:id="@+id/linear_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/profile_rv"
-        android:layout_width="match_parent"
-        tools:listitem="@layout/item_profile_grid"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_favorites" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/profile_rv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_txt_bio">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_profile_favorites"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    tools:listitem="@layout/item_profile_favorite" />
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profile_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_favorites"
+                tools:listitem="@layout/item_profile_grid" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/progress_profile"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/txtempty"
+        android:layout_height="wrap_content"/>
+</FrameLayout>
