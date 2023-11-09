@@ -2,7 +2,6 @@ package com.example.instagram.home.view
 
 import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.WindowInsetsController
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,7 @@ import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity() {
     private lateinit var navigationView: BottomNavigationView
     private lateinit var binding: ActivityHomeBinding
     private lateinit var homeFragment: Fragment
@@ -45,49 +44,45 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         profileFragment = ProfileFragment()
 
         binding.bottomNavigation.selectedItemId = R.id.nav_home
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
-
-
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> {
-                currentFragment = homeFragment
-            }
-
-            R.id.nav_search -> {
-                currentFragment = searchFragment
-            }
-
-            R.id.nav_publish -> {
-                currentFragment = cameraFragment
-            }
-
-            R.id.nav_reels -> {
-                currentFragment = reelsFragment
-            }
-
-            R.id.nav_profile -> {
-                currentFragment = profileFragment
-            }
-        }
-
-        currentFragment?.let {
-            if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
-                supportFragmentManager.beginTransaction().apply {
-                    add(R.id.main_fragment, it)
-                    commit()
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    currentFragment = homeFragment
                 }
-            } else {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.main_fragment, it)
-                    addToBackStack(null)
-                    commit()
+
+                R.id.nav_search -> {
+                    currentFragment = searchFragment
+                }
+
+                R.id.nav_publish -> {
+                    currentFragment = cameraFragment
+                }
+
+                R.id.nav_reels -> {
+                    currentFragment = reelsFragment
+                }
+
+                R.id.nav_profile -> {
+                    currentFragment = profileFragment
+                }
+
+            }
+            currentFragment?.let {
+                if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
+                    supportFragmentManager.beginTransaction().apply {
+                        add(R.id.main_fragment, it)
+                        commit()
+                    }
+                } else {
+                    supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.main_fragment, it)
+                        addToBackStack(null)
+                        commit()
+                    }
                 }
             }
+            true
         }
-        return true
     }
 }
 
