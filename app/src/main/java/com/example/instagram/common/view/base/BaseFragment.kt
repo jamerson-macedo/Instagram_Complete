@@ -1,9 +1,11 @@
 package com.example.instagram.common.view.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<T, P : BasePresenter>(layoutId: Int, val bind: (View) -> T) :
@@ -16,7 +18,9 @@ abstract class BaseFragment<T, P : BasePresenter>(layoutId: Int, val bind: (View
             setHasOptionsMenu(true)
         }
         setUpPresenter()
+
     }
+
     override fun onDestroy() {
         binding = null
         presenter.onDestroy()
@@ -27,13 +31,18 @@ abstract class BaseFragment<T, P : BasePresenter>(layoutId: Int, val bind: (View
         getMenu()?.let {
             inflater.inflate(it,menu)
         }
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = bind(view)
-        setUpViews()
+
+        if(savedInstanceState==null){
+            setUpViews()
+        }
+
     }
 
     abstract fun setUpViews()

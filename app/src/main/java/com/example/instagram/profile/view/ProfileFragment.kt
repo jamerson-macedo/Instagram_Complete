@@ -1,5 +1,6 @@
 package com.example.instagram.profile.view
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +15,7 @@ import com.example.instagram.profile.FavAdapter
 import com.example.instagram.profile.PostAdapter
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
+import com.example.instagram.profile.presenter.ProfileState
 
 
 class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
@@ -28,6 +30,21 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         presenter = ProfilePresenter(this, repository)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.subscribe(
+            if (savedInstanceState != null) {
+                ProfileState(
+                    (savedInstanceState.getParcelableArray("posts") as Array<Post>).toList(),
+                    savedInstanceState.getParcelable("user")
+                )
+            } else {
+                null
+            }
+        )
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
     override fun showProgress(enable: Boolean) {
         binding?.progressProfile?.visibility = if (enable) View.VISIBLE else View.GONE
     }
@@ -38,9 +55,16 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.profileTxtFollowersCount?.text = userAuth.FollowersgCount.toString()
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
-        presenter.fetchUserPost()
+        // presenter.fetchUserPost()
 
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable("user", presenter.getState().fetchUserProfile())
+        outState.putParcelableArray("posts", presenter.getState().fetchUserPost()?.toTypedArray())
+        super.onSaveInstanceState(outState)
+    }
+
 
     override fun displayRequestFailure(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -67,12 +91,24 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.rvProfileFavorites?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvProfileFavorites?.adapter = FavAdapter()
-        presenter.fetchUserProfile()
+        //  presenter.fetchUserProfile()
     }
 
 
     override fun getMenu(): Int? {
         return R.menu.menu_toolbar_profile
     }
+
+    /* override fun onViewStateRestored(savedInstanceState: Bundle?) {
+         if(savedInstanceState!=null){
+             val state=savedInstanceState.getParcelable<UserAuth>("mystate")
+             state?.let {
+                 displayUserProfile(it)
+             }
+         }
+         super.onViewStateRestored(savedInstanceState)
+     }
+
+     */
 
 }

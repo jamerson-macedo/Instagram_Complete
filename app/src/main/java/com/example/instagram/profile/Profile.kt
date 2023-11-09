@@ -6,10 +6,16 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 interface Profile {
-    interface Presenter : BasePresenter {
-        fun fetchUserProfile()
-        fun fetchUserPost()
+    interface Presenter : StateFulPresenter<State> {
 
+    }
+    interface StateFulPresenter<S:State>:BasePresenter{
+        fun subscribe(state:S?)
+        fun getState():S
+    }
+    interface State{
+        fun fetchUserProfile():UserAuth?
+        fun fetchUserPost():List<Post>?
     }
 
     interface View : BaseView<Presenter> {

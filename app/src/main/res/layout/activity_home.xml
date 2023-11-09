@@ -22,18 +22,14 @@
                 android:layout_height="?actionBarSize"
                 android:background="@color/white"
                 />
-
         </com.google.android.material.appbar.AppBarLayout>
 
-        <fragment
-            android:id="@+id/nav_host_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:defaultNavHost="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:navGraph="@navigation/navigation_graph"
-            android:layout_above="@id/bottom_navigation" />
+       <FrameLayout
+           android:id="@+id/main_fragment"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+           />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
