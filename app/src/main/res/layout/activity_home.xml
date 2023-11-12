@@ -13,6 +13,7 @@
         android:layout_height="0dp">
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
+            android:id="@+id/appbar"
             android:backgroundTint="@color/white"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.Toolbar
@@ -21,7 +22,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:background="@color/white"
-                />
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:src="@drawable/insta_logo"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
        <FrameLayout
