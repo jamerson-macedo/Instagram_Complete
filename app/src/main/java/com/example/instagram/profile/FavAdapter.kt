@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
+import com.example.instagram.common.view.model.Fav
 
 class FavAdapter() : RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
 
-
+    var items: List<Fav> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
         return FavViewHolder(
             LayoutInflater.from(parent.context)
@@ -18,11 +19,11 @@ class FavAdapter() : RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 30
+        return items.size
     }
 
     override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
-        holder.bind(R.drawable.post_icon)
+        items[position].uri
     }
 
     class FavViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

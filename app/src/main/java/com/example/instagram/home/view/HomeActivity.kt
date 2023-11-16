@@ -2,6 +2,8 @@ package com.example.instagram.home.view
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.view.WindowInsetsController
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +24,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var cameraFragment: Fragment
     private lateinit var reelsFragment: Fragment
     private lateinit var profileFragment: Fragment
-    private var currentFragment: Fragment? = null
+    private lateinit var currentFragment: Fragment
+    private lateinit var fragmentsavedInstance: HashMap<String, Fragment.SavedState?>
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,64 +44,148 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.photoicon)
         supportActionBar?.setTitle("")
 
+        if (savedInstanceState == null) {
+            fragmentsavedInstance = HashMap()
+
+        } else {
+            savedInstanceState.getSerializable("fragmentState") as HashMap<String, Fragment.SavedState?>
+        }
+
+
+
+
         navigationView = findViewById(R.id.bottom_navigation)
 
-        homeFragment = HomeFragment()
-        searchFragment = SearchFragment()
-        cameraFragment = PublishFragment()
-        reelsFragment = ReelsFragment()
-        profileFragment = ProfileFragment()
+        /*  homeFragment = HomeFragment()
+          searchFragment = SearchFragment()
+          cameraFragment = PublishFragment()
+          reelsFragment = ReelsFragment()
+          profileFragment = ProfileFragment()
+  */
+        //currentFragment=homeFragment
 
-        binding.bottomNavigation.selectedItemId = R.id.nav_home
+        //binding.bottomNavigation.selectedItemId = R.id.nav_home
+        // adicionando todos na pilha
+        // primeira forma de salvar os estados é inicializando tudo de uma vez e dps treocando
+
+        /* supportFragmentManager.beginTransaction().apply {
+             add(R.id.main_fragment,profileFragment,"4").hide(profileFragment)
+             add(R.id.main_fragment,reelsFragment,"3").hide(reelsFragment)
+             add(R.id.main_fragment,cameraFragment,"2").hide(cameraFragment)
+             add(R.id.main_fragment,searchFragment,"1").hide(searchFragment)
+             add(R.id.main_fragment,homeFragment,"0")
+             commit()
+         }
+         */
+
 
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             var scroolTollbar = false
-            when (item.itemId) {
+            val newFragment: Fragment? = when (item.itemId) {
                 R.id.nav_home -> {
-                    if (currentFragment == homeFragment) return@setOnItemSelectedListener false
-                    currentFragment = homeFragment
-                    scroolTollbar = true
-                }
-
-                R.id.nav_search -> {
-                    if (currentFragment == searchFragment) return@setOnItemSelectedListener false
-                    currentFragment = searchFragment
-                }
-
-                R.id.nav_publish -> {
-                    if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
-                    currentFragment = cameraFragment
-                }
-
-                R.id.nav_reels -> {
-                    if (currentFragment == reelsFragment) return@setOnItemSelectedListener false
-                    currentFragment = reelsFragment
+                    HomeFragment()
                 }
 
                 R.id.nav_profile -> {
-                    if (currentFragment == profileFragment) return@setOnItemSelectedListener false
-                    currentFragment = profileFragment
+                    ProfileFragment()
                 }
 
+                else -> null
             }
-            setScrollToolbarEnable(scroolTollbar)
-            currentFragment?.let {
-                if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
-                    supportFragmentManager.beginTransaction().apply {
-                        add(R.id.main_fragment, it)
-                        commit()
-                    }
-                } else {
-                    supportFragmentManager.beginTransaction().apply {
-                        replace(R.id.main_fragment, it)
-                        addToBackStack(null)
-                        commit()
-                    }
+            // verifico se o fragment atual é diferente do novo
+            val currtFrament = supportFragmentManager.findFragmentById(R.id.main_fragment)
+            val fragmentTag = newFragment?.javaClass?.simpleName
+
+            if (!currtFrament?.tag.equals(fragmentTag)) {
+                currtFrament?.let { frag->
+                    fragmentsavedInstance.put(
+                        frag?.tag!!,
+                        supportFragmentManager.saveFragmentInstanceState(frag)
+                    )
+                    // passo o nome do fragment e o fragmentatual
+
+
                 }
             }
+            // agora instancia apos salvar
+            newFragment?.setInitialSavedState(fragmentsavedInstance[fragmentTag])
+
+
+            // se ele existir
+            newFragment?.let {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment, it, fragmentTag).addToBackStack(fragmentTag)
+                    .commit()
+
+            }
+
+
+            /* versao 1  when (item.itemId) {
+                 R.id.nav_home -> {
+                     if (currentFragment == homeFragment) return@setOnItemSelectedListener false
+                     // esconde o atual e troca para o que clicou
+                     supportFragmentManager.beginTransaction().hide(currentFragment)
+                         .show(homeFragment).commit()
+                     currentFragment = homeFragment
+                     scroolTollbar = true
+
+                 }
+
+                 R.id.nav_search -> {
+                     if (currentFragment == searchFragment) return@setOnItemSelectedListener false
+                     supportFragmentManager.beginTransaction().hide(currentFragment)
+                         .show(searchFragment).commit()
+                     currentFragment = searchFragment
+
+                 }
+
+                 R.id.nav_publish -> {
+                     if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
+                     supportFragmentManager.beginTransaction().hide(currentFragment)
+                         .show(cameraFragment).commit()
+                     currentFragment = cameraFragment
+
+
+                 }
+
+                 R.id.nav_reels -> {
+                     if (currentFragment == reelsFragment) return@setOnItemSelectedListener false
+                     supportFragmentManager.beginTransaction().hide(currentFragment)
+                         .show(reelsFragment).commit()
+                     currentFragment = reelsFragment
+
+                 }
+
+                 R.id.nav_profile -> {
+                     if (currentFragment == profileFragment) return@setOnItemSelectedListener false
+                     supportFragmentManager.beginTransaction().hide(currentFragment)
+                         .show(profileFragment).commit()
+                     currentFragment = profileFragment
+
+                 }
+
+             }*/
+
+            setScrollToolbarEnable(scroolTollbar)
+            /* currentFragment?.let {
+                 if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
+                     supportFragmentManager.beginTransaction().apply {
+                         add(R.id.main_fragment, it)
+                         commit()
+                     }
+                 } else {
+                     supportFragmentManager.beginTransaction().apply {
+                         replace(R.id.main_fragment, it)
+                         addToBackStack(null)
+                         commit()
+                     }
+                 }
+             }
+             */
             return@setOnItemSelectedListener true
         }
+        binding.bottomNavigation.selectedItemId = R.id.nav_home
     }
 
     private fun setScrollToolbarEnable(enabled: Boolean) {
@@ -117,5 +204,17 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.appbar.layoutParams = coordinatorparams
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("fragmentState", fragmentsavedInstance)
+        super.onSaveInstanceState(outState)
+    }
+
 }
 

@@ -7,65 +7,22 @@ import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.data.ProfileRepository
 
-class ProfilePresenter(private var view: Profile.View?, val repository: ProfileRepository) :
-    Profile.Presenter {
+class ProfilePresenter(
+    private var view: Profile.View?, val repository: ProfileRepository
+) : Profile.Presenter {
+
+
+
     var users: UserAuth? = null
     var posts: List<Post>? = null
-
-    /* override fun fetchUserProfile() {
-         view?.showProgress(true)
-         val userId = DataBase.sessionAuth?.uuid ?: throw RuntimeException("user not found")
-         repository.fetchUserProfile(userId, object : RequestCallBack<UserAuth> {
-             override fun onSuccess(data: UserAuth) {
-                 view?.displayUserProfile(data)
-             }
-
-             override fun onFailure(message: String) {
-                 view?.displayRequestFailure(message)
-             }
-
-             override fun onComplete() {
-                 //
-             }
-
-         })
-
-     }
-     */
-
-    /* override fun fetchUserPost() {
-         val userId = DataBase.sessionAuth?.uuid ?: throw RuntimeException("user not found")
-         repository.fetchUserPosts(userId, object : RequestCallBack<List<Post>> {
-             override fun onSuccess(data: List<Post>) {
-                 if (data.isEmpty()) {
-                     view?.displayEmptyPost()
-                 }
-                 view?.displayFullPost(data)
-
-             }
-
-             override fun onFailure(message: String) {
-                 view?.displayRequestFailure(message)
-             }
-
-             override fun onComplete() {
-                 view?.showProgress(false)
-             }
-
-         })
-     }
-     */
-
-    override fun subscribe(state: Profile.State?) {
-        // [ega a instancia se existe
+    override fun susbscribe(state: Profile.State?) {
         posts = state?.fetchUserPost()
         if (posts != null) {
             if (posts!!.isEmpty()) {
                 view?.displayEmptyPost()
-            }else{
+            } else {
                 view?.displayFullPost(posts!!)
             }
-
         } else {
             val userId = DataBase.sessionAuth?.uuid ?: throw RuntimeException("user not found")
             repository.fetchUserPosts(userId, object : RequestCallBack<List<Post>> {
@@ -73,7 +30,7 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
                     posts = data
                     if (data.isEmpty()) {
                         view?.displayEmptyPost()
-                    }else{
+                    } else {
                         view?.displayFullPost(data)
                     }
                 }
@@ -111,14 +68,63 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
             })
         }
 
-
     }
 
-    override fun getState(): Profile.State {
-        return ProfileState(user = users, posts = posts)
-    }
+override fun getState(): Profile.State {
+    return ProfileState(posts, users)
+}
 
-    override fun onDestroy() {
-        view = null
-    }
+
+/* override fun fetchUserProfile() {
+     view?.showProgress(true)
+     val userId = DataBase.sessionAuth?.uuid ?: throw RuntimeException("user not found")
+     repository.fetchUserProfile(userId, object : RequestCallBack<UserAuth> {
+         override fun onSuccess(data: UserAuth) {
+             // passando o estado da view
+             state=data
+             view?.displayUserProfile(data)
+         }
+
+         override fun onFailure(message: String) {
+             view?.displayRequestFailure(message)
+         }
+
+         override fun onComplete() {
+             //
+         }
+
+     })
+
+ }
+
+
+override fun fetchUserPost() {
+     val userId = DataBase.sessionAuth?.uuid ?: throw RuntimeException("user not found")
+     repository.fetchUserPosts(userId, object : RequestCallBack<List<Post>> {
+         override fun onSuccess(data: List<Post>) {
+             if (data.isEmpty()) {
+                 view?.displayEmptyPost()
+             }
+             view?.displayFullPost(data)
+
+         }
+
+         override fun onFailure(message: String) {
+             view?.displayRequestFailure(message)
+         }
+
+         override fun onComplete() {
+             view?.showProgress(false)
+         }
+
+     })
+ }
+
+ */
+
+
+
+override fun onDestroy() {
+    view = null
+}
 }

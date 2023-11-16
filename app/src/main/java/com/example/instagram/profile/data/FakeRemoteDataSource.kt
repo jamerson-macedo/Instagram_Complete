@@ -2,6 +2,7 @@ package com.example.instagram.profile.data
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
@@ -27,8 +28,8 @@ class FakeRemoteDataSource : ProfileDataSource {
             // se  o primeiro dado é igual ao que recebeu do banco
             // SELECT * FROM USER_AUTH WHERE EMAIL= ? LIMIT 1
             val posts = DataBase.posts[uuid]
+            Log.i("posts",posts.toString())
             callBack.onSuccess(posts?.toList() ?: emptyList())
-
             callBack.onComplete()
         }, 2000)
     }

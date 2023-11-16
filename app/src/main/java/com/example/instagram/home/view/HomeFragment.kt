@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
+import com.example.instagram.common.view.base.BaseFragment
+import com.example.instagram.databinding.ActivityHomeBinding
+import com.example.instagram.databinding.FragmentHomeBinding
+import com.example.instagram.profile.Profile
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +24,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding, Profile.Presenter>(R.layout.fragment_home,FragmentHomeBinding::bind) {
+    override lateinit var presenter: Profile.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +54,17 @@ class HomeFragment : Fragment() {
        // rv_profile_fav.adapter = StoriesAdapter()
     }
 
+    override fun setUpViews() {
+       //
+    }
+
+    override fun setUpPresenter() {
+        //
+    }
+
+    override fun getMenu(): Int? {
+        return R.menu.menu_toolbar
+    }
     private class StoriesAdapter() : RecyclerView.Adapter<StoriesAdapter.StoriesViewHolder>() {
 
 

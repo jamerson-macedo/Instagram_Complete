@@ -1,6 +1,7 @@
 package com.example.instagram.profile.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instagram.R
 import com.example.instagram.common.view.base.BaseFragment
 import com.example.instagram.common.view.base.DependencyInjector
+import com.example.instagram.common.view.model.Fav
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.databinding.FragmentProfileBinding
@@ -20,30 +22,52 @@ import com.example.instagram.profile.presenter.ProfileState
 
 class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     R.layout.fragment_profile,
+    // quando tem a mesma assinatura pode usar os 2 pontos
     FragmentProfileBinding::bind
 ), Profile.View {
 
     private val postAdapter = PostAdapter()
+    private val favAdapter = FavAdapter()
     override lateinit var presenter: Profile.Presenter
+
     override fun setUpPresenter() {
         val repository = DependencyInjector.profileRepository()
         presenter = ProfilePresenter(this, repository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.subscribe(
+        super.onViewCreated(view, savedInstanceState)
+        presenter.susbscribe(
             if (savedInstanceState != null) {
                 ProfileState(
                     (savedInstanceState.getParcelableArray("posts") as Array<Post>).toList(),
                     savedInstanceState.getParcelable("user")
                 )
-            } else {
-                null
-            }
-        )
-        super.onViewCreated(view, savedInstanceState)
+
+            } else { null })
     }
 
+
+
+    // recuperando
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            val state = savedInstanceState.getParcelable<UserAuth?>("myState")
+            state?.let {
+                displayUserProfile(state)
+            }
+            Log.i("statefragment", state.toString())
+        }
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    // salvando
+    override fun onSaveInstanceState(outState: Bundle) {
+        // guardando o objeto
+        outState.putParcelableArray("posts", presenter.getState().fetchUserPost()?.toTypedArray())
+        outState.putParcelable("user", presenter.getState().fetchUserProfile())
+        super.onSaveInstanceState(outState)
+    }
 
     override fun showProgress(enable: Boolean) {
         binding?.progressProfile?.visibility = if (enable) View.VISIBLE else View.GONE
@@ -55,16 +79,9 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.profileTxtFollowersCount?.text = userAuth.FollowersgCount.toString()
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
-        // presenter.fetchUserPost()
+        //presenter.fetchUserPost()
 
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("user", presenter.getState().fetchUserProfile())
-        outState.putParcelableArray("posts", presenter.getState().fetchUserPost()?.toTypedArray())
-        super.onSaveInstanceState(outState)
-    }
-
 
     override fun displayRequestFailure(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -82,6 +99,11 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         postAdapter.notifyDataSetChanged()
     }
 
+    override fun displayFullFav(posts: List<Fav>) {
+        favAdapter.items = posts
+        favAdapter.notifyDataSetChanged()
+    }
+
 
     override fun setUpViews() {
         // recycler feed
@@ -90,12 +112,12 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         // recycler destaques
         binding?.rvProfileFavorites?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvProfileFavorites?.adapter = FavAdapter()
-        //  presenter.fetchUserProfile()
+        binding?.rvProfileFavorites?.adapter = favAdapter
+        //presenter.fetchUserProfile()
     }
 
 
-    override fun getMenu(): Int? {
+    override fun getMenu(): Int {
         return R.menu.menu_toolbar_profile
     }
 
