@@ -3,7 +3,10 @@ package com.example.instagram.common.view.base
 import com.example.instagram.login.data.FakeDataSource
 import com.example.instagram.login.data.LoginRepository
 import com.example.instagram.profile.data.FakeRemoteDataSource
+import com.example.instagram.profile.data.PostMemoryCache
 import com.example.instagram.profile.data.ProfileDataSource
+import com.example.instagram.profile.data.ProfileDataSourceFactory
+import com.example.instagram.profile.data.ProfileMemoryCache
 import com.example.instagram.profile.data.ProfileRepository
 import com.example.instagram.register.data.FakeRegisterDataSource
 import com.example.instagram.register.data.RegisterRepository
@@ -22,7 +25,7 @@ object DependencyInjector {
         return SplashRepository(FakeLocalDataSource())
     }
     fun profileRepository():ProfileRepository {
-        return ProfileRepository(FakeRemoteDataSource())
+        return ProfileRepository(ProfileDataSourceFactory(ProfileMemoryCache,PostMemoryCache))
     }
 
 }

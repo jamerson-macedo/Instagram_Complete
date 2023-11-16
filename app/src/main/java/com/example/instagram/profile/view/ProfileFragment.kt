@@ -1,7 +1,5 @@
 package com.example.instagram.profile.view
 
-import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +15,6 @@ import com.example.instagram.profile.FavAdapter
 import com.example.instagram.profile.PostAdapter
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
-import com.example.instagram.profile.presenter.ProfileState
 
 
 class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
@@ -35,39 +32,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         presenter = ProfilePresenter(this, repository)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.susbscribe(
-            if (savedInstanceState != null) {
-                ProfileState(
-                    (savedInstanceState.getParcelableArray("posts") as Array<Post>).toList(),
-                    savedInstanceState.getParcelable("user")
-                )
 
-            } else { null })
-    }
-
-
-
-    // recuperando
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            val state = savedInstanceState.getParcelable<UserAuth?>("myState")
-            state?.let {
-                displayUserProfile(state)
-            }
-            Log.i("statefragment", state.toString())
-        }
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-    // salvando
-    override fun onSaveInstanceState(outState: Bundle) {
-        // guardando o objeto
-        outState.putParcelableArray("posts", presenter.getState().fetchUserPost()?.toTypedArray())
-        outState.putParcelable("user", presenter.getState().fetchUserProfile())
-        super.onSaveInstanceState(outState)
-    }
 
     override fun showProgress(enable: Boolean) {
         binding?.progressProfile?.visibility = if (enable) View.VISIBLE else View.GONE
@@ -79,7 +44,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.profileTxtFollowersCount?.text = userAuth.FollowersgCount.toString()
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
-        //presenter.fetchUserPost()
+        presenter.fetchUserPost()
 
     }
 
@@ -113,7 +78,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.rvProfileFavorites?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvProfileFavorites?.adapter = favAdapter
-        //presenter.fetchUserProfile()
+        presenter.fetchUserProfile()
     }
 
 

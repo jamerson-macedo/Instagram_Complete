@@ -6,5 +6,4 @@ import android.os.Parcelable
 
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class Post(val UUID: String, val uri: Uri, val caption: String, val timestamp: Long) :Parcelable{}
+data class Post(val UUID: String, val uri: Uri, val caption: String, val timestamp: Long)
