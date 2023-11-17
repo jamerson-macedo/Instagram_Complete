@@ -11,6 +11,8 @@ object DataBase {
     val posts=HashMap<String,Set<Post>>()
     // user1[post1,post2,post3]
     // user2[post1,post2,post3]
+    val feeds=HashMap<String,Set<Post>>()
+    // preciso anexar o usuario (string) e os posts dele
     init {
         userAuths.add(UserAuth(UUID.randomUUID().toString(),"jamerson","jamersonestilizado@gmail.com","12345678"))
         userAuths.add(UserAuth(UUID.randomUUID().toString(),"jamerson","estilizado@gmail.com","12345678"))

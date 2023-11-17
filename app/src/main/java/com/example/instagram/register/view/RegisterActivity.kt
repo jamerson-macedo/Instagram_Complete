@@ -7,7 +7,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider

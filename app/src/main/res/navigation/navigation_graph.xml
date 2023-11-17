@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/nav_publish"
-        android:name="com.example.instagram.home.view.PublishFragment"
+        android:name="com.example.instagram.camera.view.PublishFragment"
         android:label="@string/menu_publish"
         tools:layout="@layout/fragment_publish" />
     <fragment

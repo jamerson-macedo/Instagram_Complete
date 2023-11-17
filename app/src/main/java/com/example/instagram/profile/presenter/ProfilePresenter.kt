@@ -7,9 +7,7 @@ import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.data.ProfileRepository
 
-class ProfilePresenter(
-    private var view: Profile.View?, val repository: ProfileRepository
-) : Profile.Presenter {
+class ProfilePresenter(private var view: Profile.View?, val repository: ProfileRepository) : Profile.Presenter {
     override fun fetchUserProfile() {
         view?.showProgress(true)
         repository.fetchUserProfile( object : RequestCallBack<UserAuth> {

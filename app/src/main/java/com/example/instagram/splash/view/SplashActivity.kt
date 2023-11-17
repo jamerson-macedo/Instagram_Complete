@@ -1,12 +1,10 @@
 package com.example.instagram.splash.view
 
 import android.animation.Animator
-import android.animation.Animator.AnimatorListener
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.instagram.R
 import com.example.instagram.common.view.base.DependencyInjector
 import com.example.instagram.databinding.ActivitySplashBinding
 import com.example.instagram.home.view.HomeActivity

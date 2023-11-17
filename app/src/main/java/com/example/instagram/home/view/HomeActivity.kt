@@ -10,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.instagram.R
+import com.example.instagram.camera.view.PublishFragment
 import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
 import com.google.android.material.appbar.AppBarLayout

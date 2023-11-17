@@ -17,8 +17,7 @@ import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
 
 
-class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
-    R.layout.fragment_profile,
+class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(R.layout.fragment_profile,
     // quando tem a mesma assinatura pode usar os 2 pontos
     FragmentProfileBinding::bind
 ), Profile.View {

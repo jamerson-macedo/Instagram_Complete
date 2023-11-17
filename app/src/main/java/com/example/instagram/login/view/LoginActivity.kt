@@ -9,8 +9,6 @@ import com.example.instagram.common.view.util.TxtWatcher
 import com.example.instagram.databinding.ActivityLoginBinding
 import com.example.instagram.home.view.HomeActivity
 import com.example.instagram.login.Login
-import com.example.instagram.login.data.FakeDataSource
-import com.example.instagram.login.data.LoginRepository
 import com.example.instagram.login.presenter.LoginPresenter
 import com.example.instagram.register.view.RegisterActivity
 
