@@ -46,4 +46,6 @@
     <string name="save">Salvar</string>
     <string name="cancel">Cancelar</string>
     <string name="nenhum_registo_encontrado">Nenhum registo encontrado</string>
+    <string name="gallery">Galeria</string>
+    <string name="Fotos">Fotos</string>
 </resources>

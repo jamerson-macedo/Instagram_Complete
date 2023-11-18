@@ -60,4 +60,8 @@ dependencies {
     implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
     // para se comunicar entre fragments
     implementation("androidx.fragment:fragment-ktx:1.6.1")
+    // camera2
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
 }

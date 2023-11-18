@@ -10,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.instagram.R
+import com.example.instagram.camera.view.AddFragment
 import com.example.instagram.camera.view.PublishFragment
 import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
@@ -48,7 +49,7 @@ class HomeActivity : AppCompatActivity() {
 
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
-        cameraFragment = PublishFragment()
+        cameraFragment = AddFragment()
         reelsFragment = ReelsFragment()
         profileFragment = ProfileFragment()
 
@@ -121,14 +122,12 @@ class HomeActivity : AppCompatActivity() {
 
                  R.id.nav_search -> {
                      if (currentFragment == searchFragment) return@setOnItemSelectedListener false
-
                      currentFragment = searchFragment
 
                  }
 
                  R.id.nav_publish -> {
                      if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
-
                      currentFragment = cameraFragment
 
 
