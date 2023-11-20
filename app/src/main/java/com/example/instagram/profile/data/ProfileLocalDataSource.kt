@@ -6,7 +6,10 @@ import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
-class ProfileLocalDataSource(val profileCache: ProfileCache<UserAuth>,val postsCache:ProfileCache<List<Post>>) : ProfileDataSource {
+class ProfileLocalDataSource(
+    val profileCache: ProfileCache<UserAuth>,
+    val postsCache: ProfileCache<List<Post>>
+) : ProfileDataSource {
     override fun fetchUserProfile(uuid: String, callBack: RequestCallBack<UserAuth>) {
         val userAuth = profileCache.get(uuid)
         if (userAuth != null) {
@@ -19,11 +22,11 @@ class ProfileLocalDataSource(val profileCache: ProfileCache<UserAuth>,val postsC
     }
 
     override fun fetchUserPosts(uuid: String, callBack: RequestCallBack<List<Post>>) {
-       val posts= postsCache.get(uuid)
-        Log.i("userposts",posts.toString())
-        if(posts!=null){
+        val posts = postsCache.get(uuid)
+        Log.i("userposts", posts?.size.toString())
+        if (posts != null) {
             callBack.onSuccess(posts)
-        }else{
+        } else {
             callBack.onFailure("posts nao exeistem")
         }
         callBack.onComplete()

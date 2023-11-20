@@ -31,6 +31,9 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(savedInstanceState!=null){
+            startCamera()
+        }
         setFragmentResultListener("takephotoKey"){ requestKey, bundle ->
 
             val uri=bundle.getParcelable<Uri>("uri")

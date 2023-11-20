@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         android:text="@string/nenhum_registo_encontrado" />
 
 </FrameLayout>

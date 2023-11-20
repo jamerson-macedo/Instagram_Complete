@@ -28,7 +28,7 @@ class FakeRemoteDataSource : ProfileDataSource {
             // se  o primeiro dado é igual ao que recebeu do banco
             // SELECT * FROM USER_AUTH WHERE EMAIL= ? LIMIT 1
             val posts = DataBase.posts[uuid]
-            Log.i("posts",posts.toString())
+            Log.i("postspos",posts.toString())
             callBack.onSuccess(posts?.toList() ?: emptyList())
             callBack.onComplete()
         }, 2000)

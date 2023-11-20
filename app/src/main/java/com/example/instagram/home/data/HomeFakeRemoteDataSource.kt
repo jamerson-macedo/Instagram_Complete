@@ -13,6 +13,7 @@ class HomeFakeRemoteDataSource : HomeDataSource {
             // se  o primeiro dado é igual ao que recebeu do banco
             // SELECT * FROM USER_AUTH WHERE EMAIL= ? LIMIT 1
             val feeds = DataBase.feeds[uuid]
+
             Log.i("posts",feeds.toString())
             callBack.onSuccess(feeds?.toList() ?: emptyList())
             callBack.onComplete()

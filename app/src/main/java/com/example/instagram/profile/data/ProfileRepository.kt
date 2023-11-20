@@ -32,6 +32,7 @@ class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory)
         val localDataSource = dataSourceFactory.createLocalDataSource()
         // busca usuario na sessao
         val userAuth = localDataSource.fetchSession()
+
         val datasource = dataSourceFactory.createFromPosts()
         datasource.fetchUserPosts(userAuth.uuid, object : RequestCallBack<List<Post>> {
             override fun onSuccess(data: List<Post>) {

@@ -33,11 +33,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(R.layout.
     override fun setUpViews() {
        binding?.homeRvFeed?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding?.homeRvFeed?.adapter =postAdapter
-        // recycler destaques
-        //val rv_profile_fav = view.findViewById<RecyclerView>(R.id.home_rv_stories)
-        // rv_profile_fav.layoutManager =
-        //    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        // rv_profile_fav.adapter = StoriesAdapter()
         presenter.fetchPost()
 
     }

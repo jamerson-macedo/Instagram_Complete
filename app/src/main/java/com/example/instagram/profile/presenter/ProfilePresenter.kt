@@ -36,8 +36,10 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
                 Log.i("datauser",data.toString())
                 if (data.isEmpty()) {
                     view?.displayEmptyPost()
+                }else{
+                    view?.displayFullPost(data)
                 }
-                view?.displayFullPost(data)
+
 
             }
 
