@@ -1,5 +1,6 @@
 package com.example.instagram.profile.presenter
 
+import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
@@ -32,6 +33,7 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
     override fun fetchUserPost() {
         repository.fetchUserPosts( object : RequestCallBack<List<Post>> {
             override fun onSuccess(data: List<Post>) {
+                Log.i("datauser",data.toString())
                 if (data.isEmpty()) {
                     view?.displayEmptyPost()
                 }

@@ -78,6 +78,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvProfileFavorites?.adapter = favAdapter
         presenter.fetchUserProfile()
+
     }
 
 

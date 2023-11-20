@@ -1,5 +1,6 @@
 package com.example.instagram.profile.data
 
+import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
@@ -19,6 +20,7 @@ class ProfileLocalDataSource(val profileCache: ProfileCache<UserAuth>,val postsC
 
     override fun fetchUserPosts(uuid: String, callBack: RequestCallBack<List<Post>>) {
        val posts= postsCache.get(uuid)
+        Log.i("userposts",posts.toString())
         if(posts!=null){
             callBack.onSuccess(posts)
         }else{

@@ -1,5 +1,6 @@
 package com.example.instagram.profile.data
 
+import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
@@ -35,6 +36,7 @@ class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory)
         datasource.fetchUserPosts(userAuth.uuid, object : RequestCallBack<List<Post>> {
             override fun onSuccess(data: List<Post>) {
                 localDataSource.putPosts(data)
+                callBack.onSuccess(data)
             }
 
             override fun onFailure(message: String) {
