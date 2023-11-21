@@ -10,7 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.instagram.R
-import com.example.instagram.camera.view.AddFragment
+import com.example.instagram.post.view.AddFragment
 import com.example.instagram.common.view.base.replaceFragment
 import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
@@ -183,10 +183,9 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
     override fun onPostCreated() {
         homeFragment.presenter.clearCache()
         // verifica se o fragment ja foi  inicializado
+        // tem que passar a tag como parametro na hora do replace
         if(supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName)!=null){
         profileFragment.presenter.clearCache()
-
-
         }
         binding.bottomNavigation.selectedItemId = R.id.nav_home
     }

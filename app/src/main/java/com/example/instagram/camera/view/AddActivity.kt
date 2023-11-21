@@ -14,6 +14,7 @@ import com.example.instagram.camera.Camera
 import com.example.instagram.camera.presenter.AddPresenter
 import com.example.instagram.common.view.base.DependencyInjector
 import com.example.instagram.common.view.model.DataBase
+import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.databinding.ActivityAddBinding
 
 class AddActivity : AppCompatActivity(), Camera.View {
@@ -29,6 +30,8 @@ class AddActivity : AppCompatActivity(), Camera.View {
         uri = intent.extras?.getParcelable<Uri>("photoUri")
             ?: throw RuntimeException("foto nao encontrada")
         binding.addImg.setImageURI(uri)
+        val userAuth = DataBase.sessionAuth?.userPhoto
+        binding.imageView.setImageURI(userAuth)
         presenter = AddPresenter(this, DependencyInjector.addRepository())
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarAdd)

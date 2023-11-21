@@ -45,6 +45,6 @@ object DataBase {
         posts[userb.uuid]= hashSetOf()
         feeds[userb.uuid]= hashSetOf()
         // forcando inicio com usuario cadastrado
-        sessionAuth = userAuths.first()
+        //sessionAuth = userAuths.first()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.instagram.camera.view
+package com.example.instagram.post.view
 
 import android.net.Uri
 import android.os.Bundle

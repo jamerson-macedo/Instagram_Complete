@@ -1,4 +1,4 @@
-package com.example.instagram.camera.view
+package com.example.instagram.post.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -11,8 +11,8 @@ class AddViewPagerAdapter(fa:FragmentActivity):FragmentStateAdapter(fa) {
 
     override fun createFragment(position: Int): Fragment {
         return when(tabsName[position]){
-            R.string.photo->PublishFragment()
-            R.string.gallery->GaleryFragment()
+            R.string.photo-> PublishFragment()
+            R.string.gallery-> GaleryFragment()
             else -> throw  IllegalStateException("Fragmento nao existe")
         }
     }
