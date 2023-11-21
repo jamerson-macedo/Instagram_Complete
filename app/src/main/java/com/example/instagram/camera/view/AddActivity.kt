@@ -19,6 +19,7 @@ import com.example.instagram.databinding.ActivityAddBinding
 class AddActivity : AppCompatActivity(), Camera.View {
     private lateinit var binding: ActivityAddBinding
 
+
     override lateinit var presenter: Camera.Presenter
     lateinit var uri: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,9 @@ class AddActivity : AppCompatActivity(), Camera.View {
     }
 
     override fun displayRequestSuccess() {
+        setResult(RESULT_OK)
         finish()
+
 
     }
 
@@ -65,7 +68,7 @@ class AddActivity : AppCompatActivity(), Camera.View {
 
             R.id.action_share -> {
 
-                presenter.createPost(uri, binding.addEditText.toString())
+                presenter.createPost(uri, binding.addEditText.text.toString())
 
                 return true
             }

@@ -54,6 +54,10 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
         })
     }
 
+    override fun clearCache() {
+        repository.clearCache()
+    }
+
 
     override fun onDestroy() {
         view = null

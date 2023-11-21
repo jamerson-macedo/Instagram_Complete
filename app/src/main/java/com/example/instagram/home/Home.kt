@@ -8,6 +8,7 @@ import com.example.instagram.common.view.model.Post
 interface Home {
     interface Presenter:BasePresenter{
         fun fetchPost()
+        fun clearCache()
 
     }
     interface View:BaseView<Presenter>{

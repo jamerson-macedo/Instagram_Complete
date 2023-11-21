@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import com.example.instagram.common.view.model.DataBase
-import com.example.instagram.common.view.model.Photo
 import com.example.instagram.common.view.model.UserAuth
 import java.util.UUID
 
@@ -32,7 +31,7 @@ class FakeRegisterDataSource : RegisterDataSource {
                 callback.onFailure("usuario ja cadastrado")
             } else {
 
-                val newUser = UserAuth(UUID.randomUUID().toString(), name, email, password)
+                val newUser = UserAuth(UUID.randomUUID().toString(), name, email, password, null)
                 val created = DataBase.userAuths.add(newUser)
                 // se o usuario for criado entao
                 if (created) {
@@ -41,9 +40,9 @@ class FakeRegisterDataSource : RegisterDataSource {
 
 
                     // inicializando outros dados do usuario
-                    DataBase.followers[newUser.uuid]= hashSetOf()
-                    DataBase.posts[newUser.uuid]= hashSetOf()
-                    DataBase.feeds[newUser.uuid]= hashSetOf()
+                    DataBase.followers[newUser.uuid] = hashSetOf()
+                    DataBase.posts[newUser.uuid] = hashSetOf()
+                    DataBase.feeds[newUser.uuid] = hashSetOf()
 
                     callback.onSuccess()
                 } else {
@@ -61,14 +60,12 @@ class FakeRegisterDataSource : RegisterDataSource {
             if (userAuth == null) {
                 callback.onFailure("usuario não encontrado")
             } else {
-                val newPhoto=Photo(uri,userAuth.uuid)
+                val index = DataBase.userAuths.indexOf(DataBase.sessionAuth)
+                DataBase.userAuths[index] = DataBase.sessionAuth!!.copy(userPhoto = uri)
+                DataBase.sessionAuth= DataBase.userAuths[index]
                 // adicionando a nova foto
-                val created=DataBase.photos.add(newPhoto)
-                if(created){
-                    callback.onSuccess()
-                }else{
-                    callback.onFailure("photo nao registrada")
-                }
+                callback.onSuccess()
+
 
             }
             callback.onComplete()

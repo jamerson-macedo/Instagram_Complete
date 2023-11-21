@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
 import com.example.instagram.common.view.model.Post
@@ -29,8 +30,11 @@ class FeedAdapter() : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(post: Post) {
-            itemView.findViewById<ImageView>(R.id.home_icon_user)
+            itemView.findViewById<ImageView>(R.id.home_img_post)
                 .setImageURI(post.uri)
+            itemView.findViewById<TextView>(R.id.home_txt_caption).text=post.caption
+            itemView.findViewById<TextView>(R.id.home_txt_name).text=post.publisher.name
+            itemView.findViewById<ImageView>(R.id.home_icon_user).setImageURI(post.publisher.userPhoto)
         }
     }
 }

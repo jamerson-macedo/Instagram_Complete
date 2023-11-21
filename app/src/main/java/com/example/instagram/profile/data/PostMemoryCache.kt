@@ -1,9 +1,10 @@
 package com.example.instagram.profile.data
 
+import com.example.instagram.common.view.base.Cache
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
-object PostMemoryCache :ProfileCache<List<Post>>{
+object PostMemoryCache : Cache<List<Post>> {
     private var posts:List<Post>?=null
     override fun iscached(): Boolean {
         return posts!=null

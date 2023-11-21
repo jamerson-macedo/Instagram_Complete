@@ -6,6 +6,10 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory) {
+    fun clearCache(){
+        val localDataSource=dataSourceFactory.createLocalDataSource()
+        localDataSource.putPosts(null)
+    }
     fun fetchUserProfile(callBack: RequestCallBack<UserAuth>) {
         val localDataSource = dataSourceFactory.createLocalDataSource()
         // busca usuario na sessao

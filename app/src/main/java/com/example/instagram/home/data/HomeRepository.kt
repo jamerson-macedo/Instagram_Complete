@@ -5,6 +5,10 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
+    fun clearCache(){
+        val localDataSource=dataSourceFactory.createLocalDataSource()
+        localDataSource.putFeed(null)
+    }
 
     fun fetchFeed( callBack: RequestCallBack<List<Post>>) {
         val localDataSource = dataSourceFactory.createLocalDataSource()

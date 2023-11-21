@@ -1,8 +1,9 @@
 package com.example.instagram.profile.data
 
+import com.example.instagram.common.view.base.Cache
 import com.example.instagram.common.view.model.UserAuth
 
-object ProfileMemoryCache : ProfileCache<UserAuth> {
+object ProfileMemoryCache : Cache<UserAuth> {
     private var userAuth: UserAuth? = null
     override fun iscached(): Boolean {
         return userAuth != null

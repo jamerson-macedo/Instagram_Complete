@@ -1,5 +1,7 @@
 package com.example.instagram.camera.view
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,30 +24,49 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     lateinit var presenter: Camera.Presenter
     private var binding: FragmentAddBinding? = null
+    private var addlistener:Addlistener?=null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-       binding=FragmentAddBinding.bind(view)
-        if(savedInstanceState==null){
+        binding = FragmentAddBinding.bind(view)
+        if (savedInstanceState == null) {
             setUpViews()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             startCamera()
         }
-        setFragmentResultListener("takephotoKey"){ requestKey, bundle ->
+        setFragmentResultListener("takephotoKey") { requestKey, bundle ->
 
-            val uri=bundle.getParcelable<Uri>("uri")
+            val uri = bundle.getParcelable<Uri>("uri")
             uri?.let {
                 // se a uri existir
-                val intent=Intent(requireContext(),AddActivity::class.java)
-                intent.putExtra("photoUri",uri)
-                startActivity(intent)
+                val intent = Intent(requireContext(), AddActivity::class.java)
+                intent.putExtra("photoUri", uri)
+               addActivityResult.launch(intent)
 
             }
         }
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is Addlistener){
+            addlistener=context
+        }
+    }
+
+
+    private val addActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                addlistener?.onPostCreated()
+
+            }
+
+        }
+
     private fun setUpViews() {
         val tabLayout = binding?.addTab
         val viewPager = binding?.addViewpager
@@ -110,6 +131,9 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     fun setUpPresenter() {
         //
+    }
+    interface Addlistener {
+        fun onPostCreated()
     }
 
 

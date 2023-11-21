@@ -3,6 +3,7 @@ package com.example.instagram.camera.view
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,23 +50,26 @@ class PublishFragment : Fragment() {
 
     private fun TakePhoto() {
         val imageCap = imageCapture ?: return
-        val filepatch= File.generateFile(requireActivity())
-        val outPutOptions=ImageCapture.OutputFileOptions.Builder(filepatch).build()
-        imageCap.takePicture(outPutOptions,ContextCompat.getMainExecutor(requireContext()),object :ImageCapture.OnImageSavedCallback{
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                // pegando a foto salva
-                val savedUri= Uri.fromFile(filepatch)
-                setFragmentResult("takephotoKey", bundleOf("uri" to savedUri))
-                Log.d("teste",savedUri.toString())
+        val filepatch = File.generateFile(requireActivity())
+        val outPutOptions = ImageCapture.OutputFileOptions.Builder(filepatch).build()
+        imageCap.takePicture(
+            outPutOptions,
+            ContextCompat.getMainExecutor(requireContext()),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    // pegando a foto salva
+                    val savedUri = Uri.fromFile(filepatch)
+                    setFragmentResult("takephotoKey", bundleOf("uri" to savedUri))
+                    Log.d("teste", savedUri.toString())
 
-            }
+                }
 
-            override fun onError(exception: ImageCaptureException) {
-                Log.e("falha",exception.toString())
+                override fun onError(exception: ImageCaptureException) {
+                    Log.e("falha", exception.toString())
 
-            }
+                }
 
-        })
+            })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,11 +91,11 @@ class PublishFragment : Fragment() {
             val cameraProvide: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build()
                 .also { it.setSurfaceProvider(previewCamera.surfaceProvider) }
-            imageCapture=ImageCapture.Builder().build()
+            imageCapture = ImageCapture.Builder().setTargetResolution(Size(480,480)) .build()
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
             try {
                 cameraProvide.unbindAll()
-                cameraProvide.bindToLifecycle(this, cameraSelector, preview,imageCapture)
+                cameraProvide.bindToLifecycle(this, cameraSelector, preview, imageCapture)
 
             } catch (e: Exception) {
                 Log.i("cameralog", e.toString())

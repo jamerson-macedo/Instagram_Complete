@@ -4,11 +4,10 @@ import java.util.UUID
 
 object DataBase {
     // hash set permite apenas um identificador unico
-    val userAuths = hashSetOf<UserAuth>()
+    val userAuths = mutableListOf<UserAuth>()
 
     // guardar se foi autenticado ou nao
     var sessionAuth: UserAuth? = null
-    val photos = hashSetOf<Photo>()
     val posts = HashMap<String, MutableSet<Post>>()
 
     // user1[post1,post2,post3]
@@ -24,14 +23,14 @@ object DataBase {
                 UUID.randomUUID().toString(),
                 "jamerson",
                 "jamersonestilizado@gmail.com",
-                "12345678"
+                "12345678",null
 
         )
         val userb = UserAuth(
                 UUID.randomUUID().toString(),
                 "jamerson",
                 "estilizado@gmail.com",
-                "12345678"
+                "12345678",null
             )
 
         userAuths.add(userb)

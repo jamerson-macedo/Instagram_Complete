@@ -10,5 +10,5 @@ interface ProfileDataSource {
     // SERVE PARA NAO IMPLEMENTAR OS METODOS
     fun fetchSession():UserAuth{throw UnsupportedOperationException()}
     fun putUser(response:UserAuth){throw UnsupportedOperationException()}
-    fun putPosts(response:List<Post>){throw UnsupportedOperationException()}
+    fun putPosts(response:List<Post>?){throw UnsupportedOperationException()}
 }

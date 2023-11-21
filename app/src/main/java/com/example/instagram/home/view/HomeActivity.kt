@@ -11,20 +11,20 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.instagram.R
 import com.example.instagram.camera.view.AddFragment
-import com.example.instagram.camera.view.PublishFragment
+import com.example.instagram.common.view.base.replaceFragment
 import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
     private lateinit var navigationView: BottomNavigationView
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var homeFragment: Fragment
+    private lateinit var homeFragment: HomeFragment
     private lateinit var searchFragment: Fragment
     private lateinit var cameraFragment: Fragment
     private lateinit var reelsFragment: Fragment
-    private lateinit var profileFragment: Fragment
+    private lateinit var profileFragment: ProfileFragment
     private var currentFragment: Fragment? = null
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -53,7 +53,7 @@ class HomeActivity : AppCompatActivity() {
         reelsFragment = ReelsFragment()
         profileFragment = ProfileFragment()
 
-       // currentFragment = homeFragment
+        // currentFragment = homeFragment
 
         //binding.bottomNavigation.selectedItemId = R.id.nav_home
         // adicionando todos na pilha
@@ -73,96 +73,85 @@ class HomeActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             var scroolTollbar = false
-         /* when (item.itemId) {
-                R.id.nav_home -> HomeFragment()
-                R.id.nav_search -> SearchFragment()
-                R.id.nav_publish -> PublishFragment()
-                R.id.nav_reels -> ReelsFragment()
-                R.id.nav_profile -> ProfileFragment()
-                else -> null
-            }
+            /* when (item.itemId) {
+                   R.id.nav_home -> HomeFragment()
+                   R.id.nav_search -> SearchFragment()
+                   R.id.nav_publish -> PublishFragment()
+                   R.id.nav_reels -> ReelsFragment()
+                   R.id.nav_profile -> ProfileFragment()
+                   else -> null
+               }
 
-            // verifico se o fragment atual é diferente do novo
-            val currtFrament = supportFragmentManager.findFragmentById(R.id.main_fragment)
-            val fragmentTag = newFragment?.javaClass?.simpleName
+               // verifico se o fragment atual é diferente do novo
+               val currtFrament = supportFragmentManager.findFragmentById(R.id.main_fragment)
+               val fragmentTag = newFragment?.javaClass?.simpleName
 
-            if (!currtFrament?.tag.equals(fragmentTag)) {
-                currtFrament?.let { frag ->
-                    fragmentsavedInstance.put(
-                        frag?.tag!!,
-                        supportFragmentManager.saveFragmentInstanceState(frag)
-                    )
-                    // passo o nome do fragment e o fragmentatual
-
-
-                }
-            }
-            // agora instancia apos salvar
-            newFragment?.setInitialSavedState(fragmentsavedInstance[fragmentTag])
+               if (!currtFrament?.tag.equals(fragmentTag)) {
+                   currtFrament?.let { frag ->
+                       fragmentsavedInstance.put(
+                           frag?.tag!!,
+                           supportFragmentManager.saveFragmentInstanceState(frag)
+                       )
+                       // passo o nome do fragment e o fragmentatual
 
 
-            // se ele existir
-            newFragment?.let {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_fragment, it, fragmentTag).addToBackStack(fragmentTag)
-                    .commit()
+                   }
+               }
+               // agora instancia apos salvar
+               newFragment?.setInitialSavedState(fragmentsavedInstance[fragmentTag])
 
-            }
-            */
+
+               // se ele existir
+               newFragment?.let {
+                   supportFragmentManager.beginTransaction()
+                       .replace(R.id.main_fragment, it, fragmentTag).addToBackStack(fragmentTag)
+                       .commit()
+
+               }
+               */
 
 
             when (item.itemId) {
-                 R.id.nav_home -> {
-                     if (currentFragment == homeFragment) return@setOnItemSelectedListener false
-                     // esconde o atual e troca para o que clicou
-                     currentFragment = homeFragment
-                     scroolTollbar = true
+                R.id.nav_home -> {
+                    if (currentFragment == homeFragment) return@setOnItemSelectedListener false
+                    // esconde o atual e troca para o que clicou
+                    currentFragment = homeFragment
+                    scroolTollbar = true
 
-                 }
+                }
 
-                 R.id.nav_search -> {
-                     if (currentFragment == searchFragment) return@setOnItemSelectedListener false
-                     currentFragment = searchFragment
+                R.id.nav_search -> {
+                    if (currentFragment == searchFragment) return@setOnItemSelectedListener false
+                    currentFragment = searchFragment
 
-                 }
+                }
 
-                 R.id.nav_publish -> {
-                     if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
-                     currentFragment = cameraFragment
+                R.id.nav_publish -> {
+                    if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
+                    currentFragment = cameraFragment
 
 
-                 }
+                }
 
-                 R.id.nav_reels -> {
-                     if (currentFragment == reelsFragment) return@setOnItemSelectedListener false
+                R.id.nav_reels -> {
+                    if (currentFragment == reelsFragment) return@setOnItemSelectedListener false
 
-                     currentFragment = reelsFragment
+                    currentFragment = reelsFragment
 
-                 }
+                }
 
-                 R.id.nav_profile -> {
-                     if (currentFragment == profileFragment) return@setOnItemSelectedListener false
-                     currentFragment = profileFragment
+                R.id.nav_profile -> {
+                    if (currentFragment == profileFragment) return@setOnItemSelectedListener false
+                    currentFragment = profileFragment
 
-                 }
+                }
 
-             }
+            }
 
             setScrollToolbarEnable(scroolTollbar)
-             currentFragment?.let {
-                 if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
-                     supportFragmentManager.beginTransaction().apply {
-                         add(R.id.main_fragment, it)
-                         commit()
-                     }
-                 } else {
-                     supportFragmentManager.beginTransaction().apply {
-                         replace(R.id.main_fragment, it)
-                         addToBackStack(null)
-                         commit()
-                     }
-                 }
-             }
+            currentFragment?.let {
+            replaceFragment(R.id.main_fragment,it)
+            }
             return@setOnItemSelectedListener true
         }
         binding.bottomNavigation.selectedItemId = R.id.nav_home
@@ -189,6 +178,17 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPostCreated() {
+        homeFragment.presenter.clearCache()
+        // verifica se o fragment ja foi  inicializado
+        if(supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName)!=null){
+        profileFragment.presenter.clearCache()
+
+
+        }
+        binding.bottomNavigation.selectedItemId = R.id.nav_home
     }
 
 
