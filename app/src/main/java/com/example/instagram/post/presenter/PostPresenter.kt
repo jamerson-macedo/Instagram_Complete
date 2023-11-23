@@ -1,5 +1,6 @@
 package com.example.instagram.post.presenter
 
+import android.net.Uri
 import com.example.instagram.post.Post
 import com.example.instagram.post.data.PostRepository
 import kotlinx.coroutines.CoroutineScope
@@ -11,6 +12,7 @@ import kotlin.coroutines.CoroutineContext
 
 class PostPresenter(private var view: Post.View?, val repository: PostRepository) : Post.Presenter,
     CoroutineScope {
+    private var uri:Uri?=null
     // por estar dentro de uma suspend fun tem chamar uma corrotina
     private val job = Job()
 
@@ -33,6 +35,14 @@ class PostPresenter(private var view: Post.View?, val repository: PostRepository
         }
 
 
+    }
+
+    override fun getselectedUri(): Uri? {
+       return uri
+    }
+
+    override fun selectedUri(uri: Uri) {
+        this.uri=uri
     }
 
     override fun onDestroy() {

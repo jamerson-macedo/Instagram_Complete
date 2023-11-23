@@ -1,8 +1,10 @@
 package com.example.instagram.profile.view
 
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instagram.R
 import com.example.instagram.common.view.base.BaseFragment
 import com.example.instagram.common.view.base.DependencyInjector
@@ -14,13 +16,14 @@ import com.example.instagram.profile.FavAdapter
 import com.example.instagram.profile.PostAdapter
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     R.layout.fragment_profile,
     // quando tem a mesma assinatura pode usar os 2 pontos
     FragmentProfileBinding::bind
-), Profile.View {
+), Profile.View,BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val postAdapter = PostAdapter()
     override lateinit var presenter: Profile.Presenter
@@ -74,6 +77,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         // recycler feed
         binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
         binding?.profileRv?.adapter = postAdapter
+        binding?.profileNavTab?.setOnNavigationItemSelectedListener(this)
         presenter.fetchUserProfile()
 
     }
@@ -81,6 +85,14 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
 
     override fun getMenu(): Int {
         return R.menu.menu_toolbar_profile
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+       when(item.itemId){
+           R.id.nav_profile_grid->binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
+           R.id.nav_reels->binding?.profileRv?.layoutManager = LinearLayoutManager(requireContext())
+       }
+        return true
     }
 
     /* override fun onViewStateRestored(savedInstanceState: Bundle?) {

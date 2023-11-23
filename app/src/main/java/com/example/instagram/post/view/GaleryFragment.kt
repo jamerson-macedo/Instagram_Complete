@@ -1,9 +1,14 @@
 package com.example.instagram.post.view
 
 import android.net.Uri
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.instagram.R
 import com.example.instagram.common.view.base.BaseFragment
@@ -28,6 +33,7 @@ class GaleryFragment() : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
         binding?.galleryImg?.setImageURI(uri)
         // quando clica ele sobe
         binding?.galeryNested?.smoothScrollTo(0, 0)
+        presenter.selectedUri(uri)
     }
 
     override fun setUpViews() {
@@ -50,6 +56,7 @@ class GaleryFragment() : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
         binding?.galleryRv?.visibility = View.VISIBLE
         pictureAdapter.items = posts
         pictureAdapter.notifyDataSetChanged()
+        presenter.selectedUri(posts.first())
 
 
     }
@@ -61,6 +68,16 @@ class GaleryFragment() : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
     override fun displayEmptyPictures() {
         binding?.galerytxt?.visibility = View.VISIBLE
         binding?.galleryRv?.visibility = View.GONE
+    }
+
+    override fun getMenu()=R.menu.menu_add
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_share->{
+                setFragmentResult("takephotoKey", bundleOf("uri" to presenter.getselectedUri()))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

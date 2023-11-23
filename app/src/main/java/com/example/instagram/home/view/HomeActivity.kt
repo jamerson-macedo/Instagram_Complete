@@ -129,6 +129,7 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
                 R.id.nav_publish -> {
                     if (currentFragment == cameraFragment) return@setOnItemSelectedListener false
                     currentFragment = cameraFragment
+                    scroolTollbar=false
 
 
                 }

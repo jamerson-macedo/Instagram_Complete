@@ -10,6 +10,9 @@ import com.example.instagram.common.view.model.UserAuth
 interface Post {
     interface Presenter:BasePresenter{
         fun fetchPictures()
+        fun getselectedUri():Uri?
+        fun selectedUri(uri: Uri)
+
     }
     interface View:BaseView<Presenter>{
         fun showProgress(enable: Boolean)

@@ -35,6 +35,7 @@ class FeedAdapter() : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
             itemView.findViewById<TextView>(R.id.home_txt_caption).text=post.caption
             itemView.findViewById<TextView>(R.id.home_txt_name).text=post.publisher.name
             itemView.findViewById<ImageView>(R.id.home_icon_user).setImageURI(post.publisher.userPhoto)
+            itemView.findViewById<TextView>(R.id.home_txt_user).text=(post.publisher.name)
         }
     }
 }

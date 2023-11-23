@@ -3,6 +3,7 @@ package com.example.instagram.register.data
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.UserAuth
 import java.util.UUID
@@ -60,12 +61,12 @@ class FakeRegisterDataSource : RegisterDataSource {
             if (userAuth == null) {
                 callback.onFailure("usuario não encontrado")
             } else {
+                // PEGO O INDICE DO ATUAL
                 val index = DataBase.userAuths.indexOf(DataBase.sessionAuth)
                 DataBase.userAuths[index] = DataBase.sessionAuth!!.copy(userPhoto = uri)
                 DataBase.sessionAuth= DataBase.userAuths[index]
                 // adicionando a nova foto
                 callback.onSuccess()
-
 
             }
             callback.onComplete()
