@@ -22,11 +22,6 @@ import androidx.fragment.app.setFragmentResultListener
 import com.example.instagram.R
 import com.example.instagram.common.view.util.File
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PublishFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PublishFragment : Fragment() {
     private lateinit var previewCamera: PreviewView
     private var imageCapture: ImageCapture? = null
@@ -45,6 +40,20 @@ class PublishFragment : Fragment() {
         previewCamera = view.findViewById(R.id.preview_camera)
         view.findViewById<Button>(R.id.camera_picture).setOnClickListener {
             TakePhoto()
+        }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // recebendo o valor do add fragment
+        setFragmentResultListener("cameraKey") { requestKey, bundle ->
+            val sholdStart = bundle.getBoolean("startCamera") // aqui ele recebe true
+            if (sholdStart) {
+                // abre a camera
+                // configura
+                startcamera()
+
+            }
+
         }
     }
 
@@ -72,18 +81,7 @@ class PublishFragment : Fragment() {
             })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // recebendo o valor do add fragment
-        setFragmentResultListener("cameraKey") { requestKey, bundle ->
-            val sholdStart = bundle.getBoolean("startCamera") // aqui ele recebe true
-            if (sholdStart) {
-                startcamera()
 
-            }
-
-        }
-    }
 
     private fun startcamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())

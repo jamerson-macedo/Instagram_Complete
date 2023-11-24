@@ -33,6 +33,11 @@ object DataBase {
                 "12345678",null
             )
 
+        for (i in 0..30){
+            val user=UserAuth(UUID.randomUUID().toString(),"user$i","user$1@gmail.com","123123123",null)
+            userAuths.add(user)
+        }
+
         userAuths.add(userb)
         userAuths.add(usera)
 
@@ -45,6 +50,6 @@ object DataBase {
         posts[userb.uuid]= hashSetOf()
         feeds[userb.uuid]= hashSetOf()
         // forcando inicio com usuario cadastrado
-        //sessionAuth = userAuths.first()
+        sessionAuth = userAuths.first()
     }
 }

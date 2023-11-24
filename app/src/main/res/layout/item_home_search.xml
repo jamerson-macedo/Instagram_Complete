@@ -18,25 +18,17 @@
 
     <TextView
         android:id="@+id/search_txt_username"
-        android:text="jamerson_macedo"
         android:layout_width="0dp"
-        android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/search_txt_name"
+        android:layout_marginStart="16dp"
+        android:text="jamerson_macedo"
+
+        app:layout_constraintBottom_toBottomOf="@+id/search_img_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/search_img_user"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/search_txt_name"
-        android:layout_marginStart="16dp"
-        android:text="jamerson macedo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/search_img_user"
-        app:layout_constraintTop_toBottomOf="@id/search_txt_username" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

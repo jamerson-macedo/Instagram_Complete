@@ -19,6 +19,8 @@ import com.example.instagram.profile.data.ProfileMemoryCache
 import com.example.instagram.profile.data.ProfileRepository
 import com.example.instagram.register.data.FakeRegisterDataSource
 import com.example.instagram.register.data.RegisterRepository
+import com.example.instagram.search.data.SearchFakeRemoteDataSource
+import com.example.instagram.search.data.SearchRepository
 import com.example.instagram.splash.data.FakeLocalDataSource
 import com.example.instagram.splash.data.SplashRepository
 
@@ -48,6 +50,9 @@ object DependencyInjector {
     }
     fun postRepository(context: Context):PostRepository{
         return PostRepository(PostLocalDataSource(context))
+    }
+    fun searchRepository():SearchRepository{
+        return SearchRepository(SearchFakeRemoteDataSource())
     }
 
 

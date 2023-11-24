@@ -32,8 +32,7 @@ class AddFragment : Fragment(R.layout.fragment_add){
     private var addlistener: Addlistener? = null
 
 
-
-
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentAddBinding.bind(view)
         if (savedInstanceState == null) {

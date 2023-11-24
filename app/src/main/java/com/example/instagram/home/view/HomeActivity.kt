@@ -14,6 +14,7 @@ import com.example.instagram.post.view.AddFragment
 import com.example.instagram.common.view.base.replaceFragment
 import com.example.instagram.databinding.ActivityHomeBinding
 import com.example.instagram.profile.view.ProfileFragment
+import com.example.instagram.search.view.SearchFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -123,6 +124,7 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
                 R.id.nav_search -> {
                     if (currentFragment == searchFragment) return@setOnItemSelectedListener false
                     currentFragment = searchFragment
+                    scroolTollbar = true
 
                 }
 
