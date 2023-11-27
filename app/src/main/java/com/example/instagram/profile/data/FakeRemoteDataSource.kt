@@ -9,13 +9,23 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 class FakeRemoteDataSource : ProfileDataSource {
-    override fun fetchUserProfile(uuid: String, callBack: RequestCallBack<UserAuth>) {
+    override fun fetchUserProfile(
+        uuid: String,
+        callBack: RequestCallBack<Pair<UserAuth, Boolean?>>
+    ) {
         Handler(Looper.getMainLooper()).postDelayed({
             // se  o primeiro dado é igual ao que recebeu do banco
             // SELECT * FROM USER_AUTH WHERE EMAIL= ? LIMIT 1
             val userAuth = DataBase.userAuths.firstOrNull { uuid == it.uuid }
             if (userAuth != null) {
-                callBack.onSuccess(userAuth)
+                if (userAuth == DataBase.sessionAuth) {
+                    callBack.onSuccess(Pair(userAuth, null))
+                } else {
+                    val followings = DataBase.followers[DataBase.sessionAuth!!.uuid]
+                    val destUser = followings?.firstOrNull { it == uuid }
+                    callBack.onSuccess(Pair(userAuth,destUser != null))
+                }
+
             } else {
                 callBack.onFailure("usuario nao encontrado")
             }
@@ -28,7 +38,7 @@ class FakeRemoteDataSource : ProfileDataSource {
             // se  o primeiro dado é igual ao que recebeu do banco
             // SELECT * FROM USER_AUTH WHERE EMAIL= ? LIMIT 1
             val posts = DataBase.posts[uuid]
-            Log.i("postspos",posts.toString())
+            Log.i("postspos", posts.toString())
             callBack.onSuccess(posts?.toList() ?: emptyList())
             callBack.onComplete()
         }, 2000)

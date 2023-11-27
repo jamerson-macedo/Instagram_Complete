@@ -2,7 +2,6 @@ package com.example.instagram.search.view
 
 import android.app.SearchManager
 import android.content.Context
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -24,13 +23,25 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
 
 
     override lateinit var presenter: Search.Presenter
-    private val searchAdapter = SearchAdapter()
+    private var searchListener: SearchListener? = null
+
+    private val searchAdapter = SearchAdapter() { userid ->
+        searchListener?.goToProfile(userid)
+
+    }
 
 
     override fun setUpViews() {
         binding?.searchRv?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding?.searchRv?.adapter = searchAdapter
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is SearchListener){
+            searchListener=context
+        }
     }
 
     override fun setUpPresenter() {
@@ -51,10 +62,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                   if(newText?.isNotEmpty()==true){
-                       presenter.fetchUser(newText)
-                       return true
-                   }
+                    if (newText?.isNotEmpty() == true) {
+                        presenter.fetchUser(newText)
+                        return true
+                    }
                     return false
                 }
 
@@ -76,6 +87,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
     override fun displayEmpty() {
         binding?.searchTxt?.visibility = View.VISIBLE
         binding?.searchRv?.visibility = View.GONE
+    }
+
+    interface SearchListener {
+        fun goToProfile(uuid: String)
     }
 
 }

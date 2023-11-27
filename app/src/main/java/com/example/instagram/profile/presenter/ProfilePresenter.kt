@@ -9,10 +9,10 @@ import com.example.instagram.profile.Profile
 import com.example.instagram.profile.data.ProfileRepository
 
 class ProfilePresenter(private var view: Profile.View?, val repository: ProfileRepository) : Profile.Presenter {
-    override fun fetchUserProfile() {
+    override fun fetchUserProfile(userid:String?) {
         view?.showProgress(true)
-        repository.fetchUserProfile( object : RequestCallBack<UserAuth> {
-            override fun onSuccess(data: UserAuth) {
+        repository.fetchUserProfile(userid, object : RequestCallBack<Pair<UserAuth, Boolean?>> {
+            override fun onSuccess(data: Pair<UserAuth, Boolean?>) {
                 // passando o estado da view
                 view?.displayUserProfile(data)
             }
@@ -30,8 +30,8 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
     }
 
 
-    override fun fetchUserPost() {
-        repository.fetchUserPosts( object : RequestCallBack<List<Post>> {
+    override fun fetchUserPost(userid:String?) {
+        repository.fetchUserPosts( userid,object : RequestCallBack<List<Post>> {
             override fun onSuccess(data: List<Post>) {
                 Log.i("datauser",data.toString())
                 if (data.isEmpty()) {

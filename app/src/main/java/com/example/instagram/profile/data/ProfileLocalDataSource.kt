@@ -8,10 +8,12 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 class ProfileLocalDataSource(
-    val profileCache: Cache<UserAuth>,
-    val postsCache: Cache<List<Post>>
+    private val profileCache: Cache<Pair<UserAuth, Boolean?>>, private val postsCache: Cache<List<Post>>
 ) : ProfileDataSource {
-    override fun fetchUserProfile(uuid: String, callBack: RequestCallBack<UserAuth>) {
+    override fun fetchUserProfile(
+        uuid: String,
+        callBack: RequestCallBack<Pair<UserAuth, Boolean?>>
+    ) {
         val userAuth = profileCache.get(uuid)
         if (userAuth != null) {
             callBack.onSuccess(userAuth)
@@ -37,7 +39,7 @@ class ProfileLocalDataSource(
         return DataBase.sessionAuth ?: throw RuntimeException("Usuario nao encontrado")
     }
 
-    override fun putUser(response: UserAuth) {
+    override fun putUser(response: Pair<UserAuth, Boolean?>) {
         profileCache.put(response)
     }
 

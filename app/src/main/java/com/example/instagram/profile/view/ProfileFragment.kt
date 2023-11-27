@@ -12,7 +12,6 @@ import com.example.instagram.common.view.model.Fav
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.databinding.FragmentProfileBinding
-import com.example.instagram.profile.FavAdapter
 import com.example.instagram.profile.PostAdapter
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
@@ -23,11 +22,11 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     R.layout.fragment_profile,
     // quando tem a mesma assinatura pode usar os 2 pontos
     FragmentProfileBinding::bind
-), Profile.View,BottomNavigationView.OnNavigationItemSelectedListener {
+), Profile.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val postAdapter = PostAdapter()
     override lateinit var presenter: Profile.Presenter
-
+    private var userId: String? = null
 
 
     override fun setUpPresenter() {
@@ -39,14 +38,22 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         binding?.progressProfile?.visibility = if (enable) View.VISIBLE else View.GONE
     }
 
-    override fun displayUserProfile(userAuth: UserAuth) {
+    override fun displayUserProfile(user: Pair<UserAuth, Boolean?>) {
+        // recebendo o par
+        val (userAuth, following) = user
+
         binding?.profileTxtPostCount?.text = userAuth.postCount.toString()
         binding?.profileTxtFollowingCount?.text = userAuth.FollowingCount.toString()
         binding?.profileTxtFollowersCount?.text = userAuth.FollowersgCount.toString()
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
         binding?.profileImgIcon?.setImageURI(userAuth.userPhoto)
-        presenter.fetchUserPost()
+        binding?.profileBtnEditProfile?.text=when(following){
+            null->getString(R.string.edit_profile)
+            true->"Unfollow"
+            false->"Follow"
+        }
+        presenter.fetchUserPost(userId)
 
     }
 
@@ -69,16 +76,17 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     }
 
     override fun displayFullFav(posts: List<Fav>) {
-    //
+        //
     }
 
 
     override fun setUpViews() {
+        userId = arguments?.getString(KEY_USER_ID)
         // recycler feed
         binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
         binding?.profileRv?.adapter = postAdapter
         binding?.profileNavTab?.setOnNavigationItemSelectedListener(this)
-        presenter.fetchUserProfile()
+        presenter.fetchUserProfile(userId)
 
     }
 
@@ -88,11 +96,18 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-       when(item.itemId){
-           R.id.nav_profile_grid->binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
-           R.id.nav_reels->binding?.profileRv?.layoutManager = LinearLayoutManager(requireContext())
-       }
+        when (item.itemId) {
+            R.id.nav_profile_grid -> binding?.profileRv?.layoutManager =
+                GridLayoutManager(requireContext(), 3)
+
+            R.id.nav_reels -> binding?.profileRv?.layoutManager =
+                LinearLayoutManager(requireContext())
+        }
         return true
+    }
+
+    companion object {
+        const val KEY_USER_ID = "key_user_id"
     }
 
     /* override fun onViewStateRestored(savedInstanceState: Bundle?) {

@@ -8,14 +8,14 @@ import com.example.instagram.common.view.model.UserAuth
 
 interface Profile {
     interface Presenter : BasePresenter{
-        fun fetchUserProfile()
-        fun fetchUserPost()
+        fun fetchUserProfile(userid:String?)
+        fun fetchUserPost(userid:String?)
         fun clearCache()
 
     }
     interface View : BaseView<Presenter> {
         fun showProgress(enable: Boolean)
-        fun displayUserProfile(userAuth: UserAuth)
+        fun displayUserProfile(userAuth: Pair<UserAuth, Boolean?>)
         fun displayRequestFailure(message: String)
         fun displayEmptyPost()
         fun displayFullPost(posts: List<Post>)

@@ -18,7 +18,7 @@ import com.example.instagram.search.view.SearchFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
+class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment.SearchListener {
     private lateinit var navigationView: BottomNavigationView
     private lateinit var binding: ActivityHomeBinding
     private lateinit var homeFragment: HomeFragment
@@ -191,6 +191,19 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener {
         profileFragment.presenter.clearCache()
         }
         binding.bottomNavigation.selectedItemId = R.id.nav_home
+    }
+
+    override fun goToProfile(uuid: String) {
+       val fragment=ProfileFragment().apply {
+           arguments=Bundle().apply {
+               putString(ProfileFragment.KEY_USER_ID,uuid)
+           }
+       }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment,fragment,fragment.javaClass.simpleName + "detail")
+            addToBackStack(null)
+            commit()
+        }
     }
 
 
