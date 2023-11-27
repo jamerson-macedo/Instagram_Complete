@@ -11,4 +11,5 @@ interface ProfileDataSource {
     fun fetchSession():UserAuth{throw UnsupportedOperationException()}
     fun putUser(response:Pair<UserAuth, Boolean?>){throw UnsupportedOperationException()}
     fun putPosts(response:List<Post>?){throw UnsupportedOperationException()}
+    fun followUser(uuid:String,isFollow:Boolean,callBack: RequestCallBack<Boolean>){throw UnsupportedOperationException()}
 }

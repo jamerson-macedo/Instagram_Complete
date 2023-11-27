@@ -58,6 +58,22 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
         repository.clearCache()
     }
 
+    override fun followUser(uuid: String?, follow: Boolean) {
+        repository.followUser(uuid,follow, object :RequestCallBack<Boolean>{
+            override fun onSuccess(data: Boolean) {
+            }
+
+            override fun onFailure(message: String) {
+
+            }
+
+            override fun onComplete() {
+
+            }
+
+        })
+    }
+
 
     override fun onDestroy() {
         view = null

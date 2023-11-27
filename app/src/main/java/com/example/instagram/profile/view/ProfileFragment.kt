@@ -37,6 +37,27 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     override fun showProgress(enable: Boolean) {
         binding?.progressProfile?.visibility = if (enable) View.VISIBLE else View.GONE
     }
+    override fun setUpViews() {
+        userId = arguments?.getString(KEY_USER_ID)
+        // recycler feed
+        binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding?.profileRv?.adapter = postAdapter
+        binding?.profileNavTab?.setOnNavigationItemSelectedListener(this)
+        binding?.profileBtnEditProfile?.setOnClickListener {
+            if(it.tag==true){
+              binding?.profileBtnEditProfile?.text="Follow"
+                binding?.profileBtnEditProfile?.tag=false
+                presenter.followUser(userId,false)
+            }else if(it.tag==false){
+                binding?.profileBtnEditProfile?.text="Unfolow"
+                binding?.profileBtnEditProfile?.tag=true
+                presenter.followUser(userId,true)
+            }
+
+        }
+        presenter.fetchUserProfile(userId)
+
+    }
 
     override fun displayUserProfile(user: Pair<UserAuth, Boolean?>) {
         // recebendo o par
@@ -53,6 +74,8 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
             true->"Unfollow"
             false->"Follow"
         }
+        // guardando o booleano
+        binding?.profileBtnEditProfile?.tag=following
         presenter.fetchUserPost(userId)
 
     }
@@ -80,15 +103,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     }
 
 
-    override fun setUpViews() {
-        userId = arguments?.getString(KEY_USER_ID)
-        // recycler feed
-        binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding?.profileRv?.adapter = postAdapter
-        binding?.profileNavTab?.setOnNavigationItemSelectedListener(this)
-        presenter.fetchUserProfile(userId)
 
-    }
 
 
     override fun getMenu(): Int {

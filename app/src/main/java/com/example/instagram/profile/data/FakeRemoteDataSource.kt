@@ -44,5 +44,23 @@ class FakeRemoteDataSource : ProfileDataSource {
         }, 2000)
     }
 
+    override fun followUser(uuid: String, isFollow: Boolean, callBack: RequestCallBack<Boolean>) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            // pegando a tabela de seguidores do usuario atual
+           var followers=DataBase.followers[DataBase.sessionAuth!!.uuid]
+            if(followers==null){
+                followers= mutableSetOf()
+                DataBase.followers[DataBase.sessionAuth!!.uuid]=followers
+            }
+            if(isFollow){
+                DataBase.followers[DataBase.sessionAuth!!.uuid]?.add(uuid)
+            }else{
+                DataBase.followers[DataBase.sessionAuth!!.uuid]!!.remove(uuid)
+            }
+            callBack.onSuccess(true)
+            callBack.onComplete()
+        }, 500)
+
+    }
 
 }

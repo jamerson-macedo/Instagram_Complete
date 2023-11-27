@@ -12,6 +12,9 @@ class ProfileDataSourceFactory(
     fun createLocalDataSource(): ProfileDataSource {
         return ProfileLocalDataSource(profileCache, postCache)
     }
+    fun createRemoteDataSource():ProfileDataSource{
+        return FakeRemoteDataSource()
+    }
 
     fun createFromUser(userid:String?): ProfileDataSource {
         // verifica se tem usuario na cache

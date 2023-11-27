@@ -11,11 +11,12 @@ interface Profile {
         fun fetchUserProfile(userid:String?)
         fun fetchUserPost(userid:String?)
         fun clearCache()
+        fun followUser(uuid:String?,follow:Boolean)
 
     }
     interface View : BaseView<Presenter> {
         fun showProgress(enable: Boolean)
-        fun displayUserProfile(userAuth: Pair<UserAuth, Boolean?>)
+        fun displayUserProfile(user: Pair<UserAuth, Boolean?>)
         fun displayRequestFailure(message: String)
         fun displayEmptyPost()
         fun displayFullPost(posts: List<Post>)
