@@ -28,7 +28,7 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo),Registe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // recebendo a foto do outro fragment
-        setFragmentResultListener("crop-key") { requestKey, bundle ->
+        setFragmentResultListener("cropkey") { requestKey, bundle ->
             val uri = bundle.getParcelable<Uri>(KEY_URI)
             onCropImageResult(uri)
         }

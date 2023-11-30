@@ -18,6 +18,7 @@ import com.example.instagram.profile.data.ProfileDataSourceFactory
 import com.example.instagram.profile.data.ProfileMemoryCache
 import com.example.instagram.profile.data.ProfileRepository
 import com.example.instagram.register.data.FakeRegisterDataSource
+import com.example.instagram.register.data.FireRegisterDataSource
 import com.example.instagram.register.data.RegisterRepository
 import com.example.instagram.search.data.SearchFakeRemoteDataSource
 import com.example.instagram.search.data.SearchRepository
@@ -31,7 +32,7 @@ object DependencyInjector {
     }
 
     fun registerEmailRepository(): RegisterRepository {
-        return RegisterRepository(FakeRegisterDataSource())
+        return RegisterRepository(FireRegisterDataSource())
     }
 
     fun SplashRepository(): SplashRepository {

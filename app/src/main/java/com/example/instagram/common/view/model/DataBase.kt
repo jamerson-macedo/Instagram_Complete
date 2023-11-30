@@ -53,7 +53,7 @@ object DataBase {
 
 
         // forcando inicio com usuario cadastrado
-        sessionAuth = userAuths.first()
-        followers[sessionAuth!!.uuid]?.add(userAuths[2].uuid)
+        //sessionAuth = userAuths.first()
+       // followers[sessionAuth!!.uuid]?.add(userAuths[2].uuid)
     }
 }
