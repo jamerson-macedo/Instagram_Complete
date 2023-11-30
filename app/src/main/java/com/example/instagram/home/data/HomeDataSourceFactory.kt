@@ -18,7 +18,7 @@ class HomeDataSourceFactory(
             return HomeLocalDataSource(feedCache)
         }
         // se nao busca do servidor
-        return HomeFakeRemoteDataSource()
+        return FireHomeDataSource()
     }
 
 }

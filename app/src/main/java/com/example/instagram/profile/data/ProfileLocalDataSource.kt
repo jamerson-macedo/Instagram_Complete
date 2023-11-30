@@ -5,14 +5,16 @@ import com.example.instagram.common.view.base.Cache
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
+import com.example.instagram.common.view.model.User
 import com.example.instagram.common.view.model.UserAuth
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileLocalDataSource(
-    private val profileCache: Cache<Pair<UserAuth, Boolean?>>, private val postsCache: Cache<List<Post>>
+    private val profileCache: Cache<Pair<User, Boolean?>>, private val postsCache: Cache<List<Post>>
 ) : ProfileDataSource {
     override fun fetchUserProfile(
         uuid: String,
-        callBack: RequestCallBack<Pair<UserAuth, Boolean?>>
+        callBack: RequestCallBack<Pair<User, Boolean?>>
     ) {
         val userAuth = profileCache.get(uuid)
         if (userAuth != null) {
@@ -35,11 +37,11 @@ class ProfileLocalDataSource(
         callBack.onComplete()
     }
 
-    override fun fetchSession(): UserAuth {
-        return DataBase.sessionAuth ?: throw RuntimeException("Usuario nao encontrado")
+    override fun fetchSession(): String {
+        return FirebaseAuth.getInstance().uid?: throw RuntimeException("Usuario nao encontrado")
     }
 
-    override fun putUser(response: Pair<UserAuth, Boolean?>) {
+    override fun putUser(response: Pair<User, Boolean?>) {
         profileCache.put(response)
     }
 

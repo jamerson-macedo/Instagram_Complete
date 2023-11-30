@@ -30,7 +30,7 @@ class LoginPresenter(private var view: Login.View?, private val dataRepository: 
             // mostrar a progresss
             view?.showProgress(true)
             dataRepository.login(email, password, object : LoginCallback {
-                override fun onSuccess(userAuth: UserAuth) {
+                override fun onSuccess() {
                     // agora retorna a view a resposta
                     view?.onUserAuthenticated()
                 }

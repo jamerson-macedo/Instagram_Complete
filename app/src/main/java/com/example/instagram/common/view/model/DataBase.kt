@@ -26,30 +26,30 @@ object DataBase {
                 "12345678",null
 
         )
-        val userb = UserAuth(
-                UUID.randomUUID().toString(),
-                "jamerson",
-                "estilizado@gmail.com",
-                "12345678",null
-            )
-
-
-        userAuths.add(userb)
-        userAuths.add(usera)
-
-
-        followers[usera.uuid]= hashSetOf()
-        posts[usera.uuid]= hashSetOf()
-        feeds[usera.uuid]= hashSetOf()
-
-        followers[userb.uuid]= hashSetOf()
-        posts[userb.uuid]= hashSetOf()
-        feeds[userb.uuid]= hashSetOf()
-
-        for (i in 0..30){
-            val user=UserAuth(UUID.randomUUID().toString(),"user$i","user$1@gmail.com","123123123",null)
-            userAuths.add(user)
-        }
+//        val userb = UserAuth(
+//                UUID.randomUUID().toString(),
+//                "jamerson",
+//                "estilizado@gmail.com",
+//                "12345678",null
+//            )
+//
+//
+       userAuths.add(usera)
+//        userAuths.add(usera)
+//
+//
+//        followers[usera.uuid]= hashSetOf()
+//        posts[usera.uuid]= hashSetOf()
+//        feeds[usera.uuid]= hashSetOf()
+//
+//        followers[userb.uuid]= hashSetOf()
+//        posts[userb.uuid]= hashSetOf()
+//        feeds[userb.uuid]= hashSetOf()
+//
+//        for (i in 0..30){
+//            val user=UserAuth(UUID.randomUUID().toString(),"user$i","user$1@gmail.com","123123123",null)
+//            userAuths.add(user)
+//        }
 
 
         // forcando inicio com usuario cadastrado

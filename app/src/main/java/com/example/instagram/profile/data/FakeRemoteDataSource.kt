@@ -6,12 +6,13 @@ import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
+import com.example.instagram.common.view.model.User
 import com.example.instagram.common.view.model.UserAuth
 
 class FakeRemoteDataSource : ProfileDataSource {
     override fun fetchUserProfile(
         uuid: String,
-        callBack: RequestCallBack<Pair<UserAuth, Boolean?>>
+        callBack: RequestCallBack<Pair<User, Boolean?>>
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
             // se  o primeiro dado é igual ao que recebeu do banco
@@ -19,11 +20,11 @@ class FakeRemoteDataSource : ProfileDataSource {
             val userAuth = DataBase.userAuths.firstOrNull { uuid == it.uuid }
             if (userAuth != null) {
                 if (userAuth == DataBase.sessionAuth) {
-                    callBack.onSuccess(Pair(userAuth, null))
+                   // callBack.onSuccess(Pair(userAuth, null))
                 } else {
                     val followings = DataBase.followers[DataBase.sessionAuth!!.uuid]
                     val destUser = followings?.firstOrNull { it == uuid }
-                    callBack.onSuccess(Pair(userAuth,destUser != null))
+                   // callBack.onSuccess(Pair(userAuth,destUser != null))
                 }
 
             } else {

@@ -15,7 +15,7 @@ class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
         // busca usuario na sessao
         val userAuth = localDataSource.fetchSession()
         val datasource = dataSourceFactory.createFromFeed()
-        datasource.fetchFeed(userAuth.uuid, object : RequestCallBack<List<Post>> {
+        datasource.fetchFeed(userAuth, object : RequestCallBack<List<Post>> {
             override fun onSuccess(data: List<Post>) {
                 localDataSource.putFeed(data)
                 callBack.onSuccess(data)

@@ -8,6 +8,7 @@ import com.example.instagram.home.data.FeedMemoryCache
 import com.example.instagram.home.data.HomeDataSourceFactory
 import com.example.instagram.home.data.HomeRepository
 import com.example.instagram.login.data.FakeDataSource
+import com.example.instagram.login.data.FireLoginDataSource
 import com.example.instagram.login.data.LoginRepository
 import com.example.instagram.post.Post
 import com.example.instagram.post.data.PostDataSource
@@ -23,12 +24,13 @@ import com.example.instagram.register.data.RegisterRepository
 import com.example.instagram.search.data.SearchFakeRemoteDataSource
 import com.example.instagram.search.data.SearchRepository
 import com.example.instagram.splash.data.FakeLocalDataSource
+import com.example.instagram.splash.data.FireSplashDataSource
 import com.example.instagram.splash.data.SplashRepository
 
 object DependencyInjector {
     // serve para obter a instacia sem precisar colocar na activity
     fun loginRepository(): LoginRepository {
-        return LoginRepository(FakeDataSource())
+        return LoginRepository(FireLoginDataSource())
     }
 
     fun registerEmailRepository(): RegisterRepository {
@@ -36,7 +38,7 @@ object DependencyInjector {
     }
 
     fun SplashRepository(): SplashRepository {
-        return SplashRepository(FakeLocalDataSource())
+        return SplashRepository(FireSplashDataSource())
     }
 
     fun profileRepository(): ProfileRepository {

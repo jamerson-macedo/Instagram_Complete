@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
+import com.example.instagram.common.view.model.User
 import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.data.ProfileRepository
@@ -11,8 +12,8 @@ import com.example.instagram.profile.data.ProfileRepository
 class ProfilePresenter(private var view: Profile.View?, val repository: ProfileRepository) : Profile.Presenter {
     override fun fetchUserProfile(userid:String?) {
         view?.showProgress(true)
-        repository.fetchUserProfile(userid, object : RequestCallBack<Pair<UserAuth, Boolean?>> {
-            override fun onSuccess(data: Pair<UserAuth, Boolean?>) {
+        repository.fetchUserProfile(userid, object : RequestCallBack<Pair<User, Boolean?>> {
+            override fun onSuccess(data: Pair<User, Boolean?>) {
                 // passando o estado da view
                 view?.displayUserProfile(data)
             }
