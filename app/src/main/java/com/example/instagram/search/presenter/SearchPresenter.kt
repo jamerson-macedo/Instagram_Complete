@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.DataBase
 import com.example.instagram.common.view.model.Post
+import com.example.instagram.common.view.model.User
 import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.data.ProfileRepository
@@ -13,8 +14,8 @@ import com.example.instagram.search.data.SearchRepository
 class SearchPresenter(private var view: Search.View?, val repository: SearchRepository) : Search.Presenter {
     override fun fetchUser(name: String) {
         view?.showProgress(true)
-        repository.fetchUsers(name,object :RequestCallBack<List<UserAuth>>{
-            override fun onSuccess(data: List<UserAuth>) {
+        repository.fetchUsers(name,object :RequestCallBack<List<User>>{
+            override fun onSuccess(data: List<User>) {
                 if (data.isEmpty()) {
                     view?.displayEmpty()
                 }else{
