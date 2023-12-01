@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.instagram.camera.data.AddFakeRemoteDataSource
 import com.example.instagram.camera.data.AddLocalDataSource
 import com.example.instagram.camera.data.AddRepository
+import com.example.instagram.camera.data.FireAddDataSource
 import com.example.instagram.home.data.FeedMemoryCache
 import com.example.instagram.home.data.HomeDataSourceFactory
 import com.example.instagram.home.data.HomeRepository
@@ -50,7 +51,7 @@ object DependencyInjector {
         return HomeRepository(HomeDataSourceFactory(FeedMemoryCache))
     }
     fun addRepository(): AddRepository {
-        return AddRepository(AddFakeRemoteDataSource(), AddLocalDataSource())
+        return AddRepository(FireAddDataSource(), AddLocalDataSource())
     }
     fun postRepository(context: Context):PostRepository{
         return PostRepository(PostLocalDataSource(context))

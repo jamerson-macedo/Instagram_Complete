@@ -4,12 +4,12 @@ import android.net.Uri
 import com.example.instagram.common.view.base.RequestCallBack
 
 class AddRepository(
-    private val remotedataSource: AddFakeRemoteDataSource,
+    private val remotedataSource: FireAddDataSource,
     private val localDataSource: AddLocalDataSource
 ) {
     fun createPost(photo: Uri, caption:String, callBack: RequestCallBack<Boolean>) {
-        val userAuth=AddLocalDataSource().fetchSession()
-        remotedataSource.createPost(userAuth.uuid,photo,caption,object :RequestCallBack<Boolean>{
+        val user=AddLocalDataSource().fetchSession()
+        remotedataSource.createPost(user,photo,caption,object :RequestCallBack<Boolean>{
             override fun onSuccess(data: Boolean) {
                 callBack.onSuccess(data)
             }
