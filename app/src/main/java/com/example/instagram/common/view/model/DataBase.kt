@@ -34,7 +34,7 @@ object DataBase {
 //            )
 //
 //
-       userAuths.add(usera)
+      // userAuths.add(usera)
 //        userAuths.add(usera)
 //
 //

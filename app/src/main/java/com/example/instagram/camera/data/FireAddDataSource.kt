@@ -4,6 +4,7 @@ import android.net.Uri
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.User
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -24,7 +25,8 @@ class FireAddDataSource : AddDataSource {
             // agora pego a referencia no banco
             imgStorage.downloadUrl.addOnSuccessListener { resDownload ->
                 // agora preciso anexar esas foto com um usuario
-                FirebaseFirestore.getInstance().collection("/users").document(uuid).get()
+               val meRef= FirebaseFirestore.getInstance().collection("/users").document(uuid)
+                   meRef.get()
                     .addOnSuccessListener { user ->
                         val me = user.toObject(User::class.java)
                         val postRef =
@@ -38,23 +40,28 @@ class FireAddDataSource : AddDataSource {
                             publisher = me
                         )
                         postRef.set(post).addOnSuccessListener { resPost ->
+                            // incrementando o post
+                            meRef.update("postCount",FieldValue.increment(1))
 
                             // meu feed
                             FirebaseFirestore.getInstance().collection("/feeds").document(uuid)
                                 .collection("posts").document(postRef.id).set(post)
                                 .addOnSuccessListener { meuFeed ->
+                                    // feed com meus seguidores
                                     FirebaseFirestore.getInstance().collection("/followers")
-                                        .document(uuid).collection("followers").get()
+                                        .document(uuid).get()
                                         .addOnSuccessListener { resFollowers ->
-                                            val documents = resFollowers.documents
-                                            for (document in documents) {
-                                                val followersId =
-                                                    document.toObject(String::class.java)
-                                                        ?: throw RuntimeException("seguidor nao encontrado")
-                                                FirebaseFirestore.getInstance().collection("/feeds")
-                                                    .document(followersId).collection("posts")
-                                                    .document(postRef.path).set(post)
+                                            if (resFollowers.exists()) {
+                                                val list =
+                                                    resFollowers.get("followers") as List<String>
+                                                for (followerId in list) {
+                                                    FirebaseFirestore.getInstance()
+                                                        .collection("/feeds")
+                                                        .document(followerId).collection("posts")
+                                                        .document(postRef.id).set(post)
+                                                }
                                             }
+
                                             callBack.onSuccess(true)
 
 

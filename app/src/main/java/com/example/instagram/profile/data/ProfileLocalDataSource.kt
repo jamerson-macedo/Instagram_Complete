@@ -41,7 +41,7 @@ class ProfileLocalDataSource(
         return FirebaseAuth.getInstance().uid?: throw RuntimeException("Usuario nao encontrado")
     }
 
-    override fun putUser(response: Pair<User, Boolean?>) {
+    override fun putUser(response: Pair<User, Boolean?>?) {
         profileCache.put(response)
     }
 

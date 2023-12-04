@@ -4,7 +4,9 @@ import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 
 class FireProfileDataSource : ProfileDataSource {
@@ -25,9 +27,18 @@ class FireProfileDataSource : ProfileDataSource {
                             callBack.onSuccess(Pair(user, null))
                         } else {
                             FirebaseFirestore.getInstance().collection("/followers")
-                                .document(FirebaseAuth.getInstance().uid!!).collection("followers")
-                                .whereEqualTo("uuid", uuid).get().addOnSuccessListener { response ->
-                                    callBack.onSuccess(Pair(user, !response.isEmpty))
+                                .document(uuid).get().addOnSuccessListener { response ->
+                                    if (!response.exists()) {
+                                        callBack.onSuccess(Pair(user, false))
+                                    } else {
+                                        val list = response.get("followers") as List<String>
+                                        callBack.onSuccess(
+                                            Pair(
+                                                user,
+                                                list.contains(FirebaseAuth.getInstance().uid)
+                                            )
+                                        )
+                                    }
 
                                 }.addOnFailureListener {
                                     callBack.onFailure(it.message ?: "falha")
@@ -66,6 +77,30 @@ class FireProfileDataSource : ProfileDataSource {
     }
 
     override fun followUser(uuid: String, isFollow: Boolean, callBack: RequestCallBack<Boolean>) {
-        //
+        val uid = FirebaseAuth.getInstance().uid ?: throw RuntimeException("Usuario não logado")
+        // atualiza a tabela de seguidores
+        FirebaseFirestore.getInstance().collection("/followers").document(uuid)
+            .update(
+                "followers",
+                if (isFollow) FieldValue.arrayUnion(uid) else FieldValue.arrayRemove(uid)
+            ).addOnSuccessListener { res ->
+                callBack.onSuccess(true)
+            }.addOnFailureListener {
+                // verifica se o erro é do firestoreexception
+                val err = it as? FirebaseFirestoreException
+                if (err?.code == FirebaseFirestoreException.Code.NOT_FOUND) {
+                    // se for a primeira vez que ta seguindo entao ele cria o no
+                    FirebaseFirestore.getInstance().collection("/followers").document(uuid)
+                        .set(hashMapOf("followers" to listOf(uid))).addOnSuccessListener {
+                            callBack.onSuccess(true)
+                        }.addOnFailureListener {
+                            callBack.onFailure(it.message ?: "falha ao criar seguidor")
+                        }
+                }
+                callBack.onFailure(it.message ?: "falha ao seguir o usuario")
+            }.addOnCompleteListener {
+                callBack.onComplete()
+            }
+
     }
 }
