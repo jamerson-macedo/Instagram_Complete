@@ -84,6 +84,8 @@ class FireProfileDataSource : ProfileDataSource {
                 "followers",
                 if (isFollow) FieldValue.arrayUnion(uid) else FieldValue.arrayRemove(uid)
             ).addOnSuccessListener { res ->
+                followingCount(uid,isFollow)
+                followerCount(uuid)
                 callBack.onSuccess(true)
             }.addOnFailureListener {
                 // verifica se o erro é do firestoreexception
@@ -92,6 +94,8 @@ class FireProfileDataSource : ProfileDataSource {
                     // se for a primeira vez que ta seguindo entao ele cria o no
                     FirebaseFirestore.getInstance().collection("/followers").document(uuid)
                         .set(hashMapOf("followers" to listOf(uid))).addOnSuccessListener {
+                            followingCount(uid,isFollow)
+                            followerCount(uuid)
                             callBack.onSuccess(true)
                         }.addOnFailureListener {
                             callBack.onFailure(it.message ?: "falha ao criar seguidor")
@@ -101,6 +105,29 @@ class FireProfileDataSource : ProfileDataSource {
             }.addOnCompleteListener {
                 callBack.onComplete()
             }
+    }
+    private fun followingCount(uid:String,isFollow: Boolean){
+        val meRef=FirebaseFirestore.getInstance().collection("/users").document(uid)
+        // se é pra saeguir
+        if(isFollow){
+            meRef.update("following",FieldValue.increment(1))
+        }else{
+            meRef.update("following",FieldValue.increment(-1))
+        }
+
+    }
+    private fun followerCount(uid:String){
+        val meRef=FirebaseFirestore.getInstance().collection("/users").document(uid)
+        // pegando a referencia do usuario que vou seguir
+        FirebaseFirestore.getInstance().collection("followers").document(uid).get().addOnSuccessListener {res->
+            if(res.exists()){
+                // se a lista existe
+                // pego o tamanho da lista e adiciono no nó
+                val list=res.get("followers") as List<String>
+                meRef.update("followers",list.size)
+            }
+        }
+
 
     }
 }

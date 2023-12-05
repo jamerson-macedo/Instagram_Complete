@@ -3,7 +3,6 @@ package com.example.instagram.profile.data
 import com.example.instagram.common.view.base.RequestCallBack
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.User
-import com.example.instagram.common.view.model.UserAuth
 
 class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory) {
     fun clearCache() {
@@ -82,6 +81,6 @@ class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory)
 
         })
 
-
     }
+
 }
