@@ -82,5 +82,9 @@ class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory)
         })
 
     }
+    fun logout(){
+        dataSourceFactory.createRemoteDataSource().logout()
+    }
+
 
 }

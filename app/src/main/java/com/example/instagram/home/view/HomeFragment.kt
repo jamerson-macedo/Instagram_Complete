@@ -1,5 +1,6 @@
 package com.example.instagram.home.view
 
+import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(R.layout.
 
     override lateinit var presenter: Home.Presenter
     private val postAdapter=FeedAdapter()
+
 
 
     override fun setUpViews() {
@@ -66,6 +68,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(R.layout.
     override fun displayFullFav(posts: List<Fav>) {
         //
     }
+
+
 
 
 }

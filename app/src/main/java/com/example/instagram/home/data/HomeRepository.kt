@@ -5,12 +5,12 @@ import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.UserAuth
 
 class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
-    fun clearCache(){
-        val localDataSource=dataSourceFactory.createLocalDataSource()
+    fun clearCache() {
+        val localDataSource = dataSourceFactory.createLocalDataSource()
         localDataSource.putFeed(null)
     }
 
-    fun fetchFeed( callBack: RequestCallBack<List<Post>>) {
+    fun fetchFeed(callBack: RequestCallBack<List<Post>>) {
         val localDataSource = dataSourceFactory.createLocalDataSource()
         // busca usuario na sessao
         val userAuth = localDataSource.fetchSession()
@@ -22,11 +22,11 @@ class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
             }
 
             override fun onFailure(message: String) {
-               callBack.onFailure(message)
+                callBack.onFailure(message)
             }
 
             override fun onComplete() {
-              callBack.onComplete()
+                callBack.onComplete()
             }
         })
     }

@@ -13,6 +13,7 @@ interface Profile {
         fun fetchUserPost(userid:String?)
         fun clearCache()
         fun followUser(uuid:String?,follow:Boolean)
+        fun logout()
 
     }
     interface View : BaseView<Presenter> {

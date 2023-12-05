@@ -1,5 +1,6 @@
 package com.example.instagram.home.view
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,12 +14,14 @@ import com.example.instagram.R
 import com.example.instagram.post.view.AddFragment
 import com.example.instagram.common.view.base.replaceFragment
 import com.example.instagram.databinding.ActivityHomeBinding
+import com.example.instagram.profile.LogoutListenner
 import com.example.instagram.profile.view.ProfileFragment
 import com.example.instagram.search.view.SearchFragment
+import com.example.instagram.splash.view.SplashActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment.SearchListener {
+class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment.SearchListener,LogoutListenner {
     private lateinit var navigationView: BottomNavigationView
     private lateinit var binding: ActivityHomeBinding
     private lateinit var homeFragment: HomeFragment
@@ -204,6 +207,17 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment
             addToBackStack(null)
             commit()
         }
+    }
+
+    override fun logout() {
+        if(supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName)!=null){
+            profileFragment.presenter.clearCache()
+        }
+        homeFragment.presenter.clearCache()
+        profileFragment.presenter.logout()
+        val intent=Intent(baseContext,SplashActivity::class.java)
+        intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
 

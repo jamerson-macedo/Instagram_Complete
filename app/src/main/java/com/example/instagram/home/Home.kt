@@ -10,6 +10,7 @@ interface Home {
         fun fetchPost()
         fun clearCache()
 
+
     }
     interface View:BaseView<Presenter>{
         fun showProgress(enable: Boolean)

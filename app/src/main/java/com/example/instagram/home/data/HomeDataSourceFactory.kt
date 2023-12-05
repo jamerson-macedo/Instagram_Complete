@@ -11,6 +11,9 @@ class HomeDataSourceFactory(
     fun createLocalDataSource(): HomeDataSource {
         return HomeLocalDataSource(feedCache)
     }
+    fun createRemoteDataSource(): HomeDataSource {
+        return FireHomeDataSource()
+    }
     fun createFromFeed(): HomeDataSource {
         // verifica se tem usuario na cache
         if (feedCache.iscached()) {

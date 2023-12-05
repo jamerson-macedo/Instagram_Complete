@@ -33,6 +33,8 @@ class HomePresenter(private var view: Home.View?, val repository: HomeRepository
         repository.clearCache()
     }
 
+
+
     override fun onDestroy() {
         view = null
     }

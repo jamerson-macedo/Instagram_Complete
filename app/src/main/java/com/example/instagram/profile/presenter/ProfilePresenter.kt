@@ -75,6 +75,10 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
         })
     }
 
+    override fun logout() {
+        repository.logout()
+    }
+
 
     override fun onDestroy() {
         view = null

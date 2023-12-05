@@ -1,5 +1,6 @@
 package com.example.instagram.profile.view
 
+import android.content.Context
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -12,8 +13,8 @@ import com.example.instagram.common.view.base.DependencyInjector
 import com.example.instagram.common.view.model.Fav
 import com.example.instagram.common.view.model.Post
 import com.example.instagram.common.view.model.User
-import com.example.instagram.common.view.model.UserAuth
 import com.example.instagram.databinding.FragmentProfileBinding
+import com.example.instagram.profile.LogoutListenner
 import com.example.instagram.profile.PostAdapter
 import com.example.instagram.profile.Profile
 import com.example.instagram.profile.presenter.ProfilePresenter
@@ -29,6 +30,13 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     private val postAdapter = PostAdapter()
     override lateinit var presenter: Profile.Presenter
     private var userId: String? = null
+    private var logoutListenner: LogoutListenner?=null
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is LogoutListenner){
+            logoutListenner=context
+        }
+    }
 
 
     override fun setUpPresenter() {
@@ -128,6 +136,16 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
 
     companion object {
         const val KEY_USER_ID = "key_user_id"
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_menu->{
+                logoutListenner?.logout()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /* override fun onViewStateRestored(savedInstanceState: Bundle?) {

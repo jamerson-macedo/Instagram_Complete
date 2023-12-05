@@ -130,4 +130,8 @@ class FireProfileDataSource : ProfileDataSource {
 
 
     }
+    override fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
 }
