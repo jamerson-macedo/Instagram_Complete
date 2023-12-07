@@ -31,10 +31,14 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
     override lateinit var presenter: Profile.Presenter
     private var userId: String? = null
     private var logoutListenner: LogoutListenner?=null
+    private var followListener: FollowListener?=null
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is LogoutListenner){
             logoutListenner=context
+        }
+        if(context is FollowListener){
+            followListener=context
         }
     }
 
@@ -84,8 +88,8 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
 
         binding?.profileBtnEditProfile?.text=when(following){
             null->getString(R.string.edit_profile)
-            true->"Unfollow"
-            false->"Follow"
+            true->"Seguindo"
+            false->"Seguir"
         }
         // guardando o booleano
         binding?.profileBtnEditProfile?.tag=following
@@ -115,8 +119,12 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding, Profile.Presenter
         //
     }
 
-
-
+    override fun followUpdated() {
+        followListener?.followUpdated()
+    }
+    interface FollowListener{
+        fun followUpdated()
+    }
 
 
     override fun getMenu(): Int {

@@ -23,5 +23,6 @@ interface Profile {
         fun displayEmptyPost()
         fun displayFullPost(posts: List<Post>)
         fun displayFullFav(posts: List<Fav>)
+        fun followUpdated()
     }
 }

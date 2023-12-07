@@ -84,9 +84,10 @@ class FireProfileDataSource : ProfileDataSource {
                 "followers",
                 if (isFollow) FieldValue.arrayUnion(uid) else FieldValue.arrayRemove(uid)
             ).addOnSuccessListener { res ->
-                followingCount(uid,isFollow)
-                followerCount(uuid)
-                callBack.onSuccess(true)
+                followingCount(uid, isFollow)
+                followerCount(uuid, callBack)
+               // updateFeed(uuid, isFollow)
+                //callBack.onSuccess(true)
             }.addOnFailureListener {
                 // verifica se o erro é do firestoreexception
                 val err = it as? FirebaseFirestoreException
@@ -94,9 +95,9 @@ class FireProfileDataSource : ProfileDataSource {
                     // se for a primeira vez que ta seguindo entao ele cria o no
                     FirebaseFirestore.getInstance().collection("/followers").document(uuid)
                         .set(hashMapOf("followers" to listOf(uid))).addOnSuccessListener {
-                            followingCount(uid,isFollow)
-                            followerCount(uuid)
-                            callBack.onSuccess(true)
+                            followingCount(uid, isFollow)
+                            followerCount(uuid, callBack)
+                           // updateFeed(uuid, isFollow)
                         }.addOnFailureListener {
                             callBack.onFailure(it.message ?: "falha ao criar seguidor")
                         }
@@ -106,30 +107,65 @@ class FireProfileDataSource : ProfileDataSource {
                 callBack.onComplete()
             }
     }
-    private fun followingCount(uid:String,isFollow: Boolean){
-        val meRef=FirebaseFirestore.getInstance().collection("/users").document(uid)
+
+    private fun updateFeed(uuid: String, isfollow: Boolean) {
+        if (!isfollow) {
+            // remove do feed
+            // feed do usuario atual na colecao posts quando ele for igual ao usuario que vem como parametro
+            FirebaseFirestore.getInstance().collection("/feeds")
+                .document(FirebaseAuth.getInstance().uid!!).collection("posts")
+                .whereEqualTo("publisher.uuid", uuid).get().addOnSuccessListener { res ->
+                    // devolve todos os posts
+                    val documents = res.documents
+                    for (document in documents) {
+                        document.reference.delete()
+                    }
+
+                }
+
+        } else {
+            // adiciona no feed
+
+            FirebaseFirestore.getInstance().collection("/posts").document(uuid).collection("posts")
+                .get().addOnSuccessListener { res ->
+                    val posts = res.toObjects(Post::class.java)
+                    posts.lastOrNull()?.let {
+                        FirebaseFirestore.getInstance().collection("/feeds")
+                            .document(FirebaseAuth.getInstance().uid!!).collection("posts")
+                            .document(it.UUID!!).set(it)
+                    }
+
+                }
+        }
+
+    }
+
+    private fun followingCount(uid: String, isFollow: Boolean) {
+        val meRef = FirebaseFirestore.getInstance().collection("/users").document(uid)
         // se é pra saeguir
-        if(isFollow){
-            meRef.update("following",FieldValue.increment(1))
-        }else{
-            meRef.update("following",FieldValue.increment(-1))
+        if (isFollow) {
+            meRef.update("following", FieldValue.increment(1))
+        } else {
+            meRef.update("following", FieldValue.increment(-1))
         }
 
     }
-    private fun followerCount(uid:String){
-        val meRef=FirebaseFirestore.getInstance().collection("/users").document(uid)
+
+    private fun followerCount(uid: String, callBack: RequestCallBack<Boolean>) {
+        val meRef = FirebaseFirestore.getInstance().collection("/users").document(uid)
         // pegando a referencia do usuario que vou seguir
-        FirebaseFirestore.getInstance().collection("followers").document(uid).get().addOnSuccessListener {res->
-            if(res.exists()){
-                // se a lista existe
-                // pego o tamanho da lista e adiciono no nó
-                val list=res.get("followers") as List<String>
-                meRef.update("followers",list.size)
+        FirebaseFirestore.getInstance().collection("followers").document(uid).get()
+            .addOnSuccessListener { res ->
+                if (res.exists()) {
+                    // se a lista existe
+                    // pego o tamanho da lista e adiciono no nó
+                    val list = res.get("followers") as List<String>
+                    meRef.update("followers", list.size)
+                }
+                callBack.onSuccess(true)
             }
-        }
-
-
     }
+
     override fun logout() {
         FirebaseAuth.getInstance().signOut()
     }

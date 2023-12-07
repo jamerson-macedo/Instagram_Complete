@@ -62,6 +62,11 @@ class ProfilePresenter(private var view: Profile.View?, val repository: ProfileR
     override fun followUser(uuid: String?, follow: Boolean) {
         repository.followUser(uuid,follow, object :RequestCallBack<Boolean>{
             override fun onSuccess(data: Boolean) {
+                fetchUserProfile(uuid)
+                if(data){
+                    view?.followUpdated()
+                }
+
             }
 
             override fun onFailure(message: String) {

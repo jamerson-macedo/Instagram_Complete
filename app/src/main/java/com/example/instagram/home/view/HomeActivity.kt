@@ -21,7 +21,7 @@ import com.example.instagram.splash.view.SplashActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment.SearchListener,LogoutListenner {
+class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment.SearchListener,LogoutListenner,ProfileFragment.FollowListener {
     private lateinit var navigationView: BottomNavigationView
     private lateinit var binding: ActivityHomeBinding
     private lateinit var homeFragment: HomeFragment
@@ -218,6 +218,13 @@ class HomeActivity : AppCompatActivity(), AddFragment.Addlistener,SearchFragment
         val intent=Intent(baseContext,SplashActivity::class.java)
         intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    override fun followUpdated() {
+        homeFragment.presenter.clearCache()
+        if(supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName)!=null){
+            profileFragment.presenter.clearCache()
+        }
     }
 
 
