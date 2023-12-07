@@ -9,9 +9,9 @@ Clone do Instagram com as principais funcionalidades do App Oficial do instagram
 
 ## Layout mobile
 <p float="center">
-  <img src="Art/foto1.png" width="250" />
-  <img src="Art/foto2.png" width="250" />
-  <img src="Art/foto3.png" width="250" />
+  <img src="Art/foto1.jpg" width="250" />
+  <img src="Art/foto2.jpg" width="250" />
+  <img src="Art/foto3.jpg" width="250" />
 </p>
 # Tecnologias utilizadas
 - Kotlin
