@@ -6,15 +6,16 @@ Clone do Instagram com as principais funcionalidades do App Oficial do instagram
 - Feed de Posts
 - Buscar Usuario
 - Upload de foto pela Galeria e Camera
-
-## Layout mobile
-<p float="center">
-  <img src="Art/foto1.jpg" width="250" />
-  <img src="Art/foto2.jpg" width="250" />
-  <img src="Art/foto3.jpg" width="250" />
-</p>
 # Tecnologias utilizadas
 - Kotlin
 - MVP
 - Firebase
 - CameraX
+## Layout mobile
+<p float="center">
+  <img src="Art/foto3.jpg" width="250" />
+  <img src="Art/foto2.jpg" width="250" />
+  <img src="Art/foto1.jpg" width="250" />
+</p>
+
+
