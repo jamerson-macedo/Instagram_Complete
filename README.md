@@ -11,6 +11,7 @@ Clone do Instagram com as principais funcionalidades do App Oficial do instagram
 - MVP
 - Firebase
 - CameraX
+- ViewPager
 ## Layout mobile
 <p float="center">
   <img src="Art/foto3.jpg" width="250" />
